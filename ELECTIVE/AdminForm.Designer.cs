@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             SEARCH = new Label();
-            txtSearch = new Button();
+            Searchbttn = new Button();
             groupBox4 = new GroupBox();
             txtDescription = new TextBox();
             label11 = new Label();
@@ -62,6 +62,7 @@
             label1 = new Label();
             txtBarcode = new TextBox();
             label2 = new Label();
+            txtSearch = new TextBox();
             groupBox4.SuspendLayout();
             groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pbProductImage).BeginInit();
@@ -77,27 +78,25 @@
             SEARCH.AutoSize = true;
             SEARCH.BackColor = SystemColors.ButtonHighlight;
             SEARCH.Font = new Font("Courier New", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            SEARCH.Location = new Point(1505, 84);
+            SEARCH.Location = new Point(1483, 446);
             SEARCH.Name = "SEARCH";
-            SEARCH.Size = new Size(76, 21);
+            SEARCH.Size = new Size(0, 21);
             SEARCH.TabIndex = 32;
-            SEARCH.Text = "SEARCH";
             // 
-            // txtSearch
+            // Searchbttn
             // 
-            txtSearch.BackgroundImage = Properties.Resources.magnifyingGlass;
-            txtSearch.BackgroundImageLayout = ImageLayout.Zoom;
-            txtSearch.FlatAppearance.BorderSize = 0;
-            txtSearch.FlatAppearance.MouseDownBackColor = Color.FromArgb(224, 224, 224);
-            txtSearch.FlatAppearance.MouseOverBackColor = Color.Gray;
-            txtSearch.FlatStyle = FlatStyle.Flat;
-            txtSearch.Location = new Point(1431, 61);
-            txtSearch.Name = "txtSearch";
-            txtSearch.Size = new Size(65, 67);
-            txtSearch.TabIndex = 31;
-            txtSearch.UseVisualStyleBackColor = true;
-            txtSearch.TextChanged += txtSearch_TextChanged;
-            txtSearch.Click += txtSearch_TextChanged;
+            Searchbttn.BackgroundImage = Properties.Resources.magnifyingGlass;
+            Searchbttn.BackgroundImageLayout = ImageLayout.Zoom;
+            Searchbttn.FlatAppearance.BorderSize = 0;
+            Searchbttn.FlatAppearance.MouseDownBackColor = Color.FromArgb(224, 224, 224);
+            Searchbttn.FlatAppearance.MouseOverBackColor = Color.Gray;
+            Searchbttn.FlatStyle = FlatStyle.Flat;
+            Searchbttn.Location = new Point(1426, 385);
+            Searchbttn.Name = "Searchbttn";
+            Searchbttn.Size = new Size(57, 41);
+            Searchbttn.TabIndex = 31;
+            Searchbttn.UseVisualStyleBackColor = true;
+            Searchbttn.Click += Searchbttn_Click;
             // 
             // groupBox4
             // 
@@ -201,9 +200,9 @@
             delete_button.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             delete_button.BackColor = Color.Crimson;
             delete_button.Font = new Font("Courier New", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            delete_button.Location = new Point(1428, 367);
+            delete_button.Location = new Point(1428, 239);
             delete_button.Name = "delete_button";
-            delete_button.Size = new Size(164, 56);
+            delete_button.Size = new Size(227, 56);
             delete_button.TabIndex = 29;
             delete_button.Text = "DELETE";
             delete_button.UseVisualStyleBackColor = false;
@@ -214,9 +213,9 @@
             update_button.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             update_button.BackColor = Color.DeepSkyBlue;
             update_button.Font = new Font("Courier New", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            update_button.Location = new Point(1428, 295);
+            update_button.Location = new Point(1428, 167);
             update_button.Name = "update_button";
-            update_button.Size = new Size(164, 56);
+            update_button.Size = new Size(227, 56);
             update_button.TabIndex = 28;
             update_button.Text = "UPDATE";
             update_button.UseVisualStyleBackColor = false;
@@ -227,9 +226,9 @@
             cancel_button.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             cancel_button.BackColor = Color.Gold;
             cancel_button.Font = new Font("Courier New", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            cancel_button.Location = new Point(1428, 226);
+            cancel_button.Location = new Point(1428, 98);
             cancel_button.Name = "cancel_button";
-            cancel_button.Size = new Size(164, 56);
+            cancel_button.Size = new Size(227, 56);
             cancel_button.TabIndex = 26;
             cancel_button.Text = "CANCEL";
             cancel_button.UseVisualStyleBackColor = false;
@@ -240,9 +239,9 @@
             save_button.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             save_button.BackColor = Color.LimeGreen;
             save_button.Font = new Font("Courier New", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            save_button.Location = new Point(1428, 151);
+            save_button.Location = new Point(1428, 23);
             save_button.Name = "save_button";
-            save_button.Size = new Size(164, 60);
+            save_button.Size = new Size(227, 60);
             save_button.TabIndex = 25;
             save_button.Text = "SAVE";
             save_button.UseVisualStyleBackColor = false;
@@ -276,7 +275,7 @@
             // pbProductImage
             // 
             pbProductImage.BackColor = Color.MistyRose;
-            pbProductImage.BackgroundImageLayout = ImageLayout.Stretch;
+            pbProductImage.BackgroundImageLayout = ImageLayout.Zoom;
             pbProductImage.BorderStyle = BorderStyle.Fixed3D;
             pbProductImage.Location = new Point(27, 55);
             pbProductImage.Name = "pbProductImage";
@@ -401,8 +400,10 @@
             dgvProducts.Location = new Point(23, 446);
             dgvProducts.Name = "dgvProducts";
             dgvProducts.RowHeadersWidth = 51;
-            dgvProducts.Size = new Size(1574, 308);
+            dgvProducts.Size = new Size(1632, 308);
             dgvProducts.TabIndex = 27;
+            dgvProducts.SelectionChanged += dgvProducts_SelectionChanged_1;
+            dgvProducts.Click += dgvProducts_SelectionChanged_1;
             // 
             // groupBox2
             // 
@@ -456,14 +457,27 @@
             label2.TabIndex = 2;
             label2.Text = "BARCODE:";
             // 
+            // txtSearch
+            // 
+            txtSearch.BackColor = SystemColors.Info;
+            txtSearch.Font = new Font("Courier New", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtSearch.ForeColor = SystemColors.InfoText;
+            txtSearch.Location = new Point(1489, 385);
+            txtSearch.Multiline = true;
+            txtSearch.Name = "txtSearch";
+            txtSearch.PlaceholderText = "SEARCH HERE...";
+            txtSearch.Size = new Size(164, 41);
+            txtSearch.TabIndex = 22;
+            // 
             // AdminForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.DarkSlateBlue;
             ClientSize = new Size(1715, 781);
-            Controls.Add(SEARCH);
             Controls.Add(txtSearch);
+            Controls.Add(SEARCH);
+            Controls.Add(Searchbttn);
             Controls.Add(groupBox4);
             Controls.Add(delete_button);
             Controls.Add(update_button);
@@ -495,7 +509,7 @@
         #endregion
 
         private Label SEARCH;
-        private Button txtSearch;
+        private Button Searchbttn;
         public GroupBox groupBox4;
         private TextBox txtDescription;
         private Label label11;
@@ -528,5 +542,6 @@
         private Label label1;
         private TextBox txtBarcode;
         private Label label2;
+        private TextBox txtSearch;
     }
 }

@@ -280,51 +280,94 @@ namespace ELECTIVE
             }
         }
 
-        private void txtSearch_TextChanged(object sender, EventArgs e)
+        private void Searchbttn_Click(object sender, EventArgs e)
         {
             try
             {
                 string searchText = txtSearch.Text.Trim();
 
-                // DEBUG: Show what we're searching for
-                MessageBox.Show("Searching for: " + searchText);
-
                 if (string.IsNullOrEmpty(searchText))
                 {
+                    MessageBox.Show("Please enter a search term");
                     LoadAllProducts();
+                    return;
+                }
+
+                // Try barcode search first
+                Product productByBarcode = ProductDAL.GetProductByBarcode(searchText);
+
+                if (productByBarcode != null)
+                {
+                    // Found by barcode!
+                    List<Product> results = new List<Product> { productByBarcode };
+                    dgvProducts.DataSource = results;
+                    if (dgvProducts.Columns.Count > 0)
+                        dgvProducts.Columns["ProductID"].Visible = false;
                 }
                 else
                 {
-                    // Search by barcode
-                    Product productByBarcode = ProductDAL.GetProductByBarcode(searchText);
-
-                    // DEBUG: Did we find it?
-                    if (productByBarcode != null)
-                    {
-                        MessageBox.Show("Found by barcode: " + productByBarcode.ProductName);
-                        List<Product> results = new List<Product> { productByBarcode };
-                        dgvProducts.DataSource = results;
+                    // Search by name instead
+                    List<Product> results = ProductDAL.SearchProductsByName(searchText);
+                    dgvProducts.DataSource = results;
+                    if (dgvProducts.Columns.Count > 0)
                         dgvProducts.Columns["ProductID"].Visible = false;
-                    }
-                    else
-                    {
-                        MessageBox.Show("Not found by barcode, searching by name...");
-
-                        // Search by name
-                        List<Product> results = ProductDAL.SearchProductsByName(searchText);
-
-                        // DEBUG: How many results?
-                        MessageBox.Show("Found " + results.Count + " results by name");
-
-                        dgvProducts.DataSource = results;
-                        if (dgvProducts.Columns.Count > 0)
-                            dgvProducts.Columns["ProductID"].Visible = false;
-                    }
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Error searching: " + ex.Message);
+            }
+        }
+
+        private void dgvProducts_SelectionChanged_1(object sender, EventArgs e)
+        {
+            if (dgvProducts.SelectedRows.Count > 0)
+            {
+                DataGridViewRow row = dgvProducts.SelectedRows[0];
+
+                if (row.Cells["ProductID"].Value != null)
+                {
+                    int productID = (int)row.Cells["ProductID"].Value;
+                    currentProduct = ProductDAL.GetProductByID(productID);
+
+                    if (currentProduct != null)
+                    {
+                        // Fill form fields
+                        txtBarcode.Text = currentProduct.Barcode;
+                        txtProductName.Text = currentProduct.ProductName;
+                        txtCategory.Text = currentProduct.Category;
+                        txtQuantity.Text = currentProduct.Quantity.ToString();
+                        txtPrice.Text = currentProduct.Price.ToString();
+                        txtUnit.Text = currentProduct.Unit;
+                        txtDescription.Text = currentProduct.Description;
+                        txtSupplier.Text = currentProduct.Supplier;
+
+                        if (currentProduct.ManufacturingDate.HasValue)
+                            dtpMfgDate.Value = currentProduct.ManufacturingDate.Value;
+
+                        if (currentProduct.ExpirationDate.HasValue)
+                            dtpExpDate.Value = currentProduct.ExpirationDate.Value;
+
+                        if (!string.IsNullOrEmpty(currentProduct.ImagePath) && File.Exists(currentProduct.ImagePath))
+                        {
+                            try
+                            {
+                                pbProductImage.Image = Image.FromFile(currentProduct.ImagePath);
+                                pbProductImage.SizeMode = PictureBoxSizeMode.Zoom;  // ✅ ADD THIS LINE!
+                                selectedImagePath = currentProduct.ImagePath;
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show("Error loading image: " + ex.Message);
+                            }
+                        }
+                        else
+                        {
+                            pbProductImage.Image = null;
+                            selectedImagePath = null;
+                        }
+                    }
+                }
             }
         }
     }
