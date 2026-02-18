@@ -26,10 +26,10 @@ namespace ELECTIVE
                     // The ? are placeholders for our actual values (to prevent SQL injection)
                     string query = @"INSERT INTO Products 
                                     (Barcode, ProductName, Category, Quantity, Price, 
-                                     ExpirationDate, ManufacturingDate, Unit, Description, Supplier, ImagePath) 
+                                     ExpirationDate, ManufacturingDate, Unit, Description, Supplier, ImagePath, BarcodeImagePath, QRCodeImagePath) 
                                     VALUES 
                                     (@Barcode, @ProductName, @Category, @Quantity, @Price, 
-                                     @ExpirationDate, @ManufacturingDate, @Unit, @Description, @Supplier, @ImagePath)";
+                                     @ExpirationDate, @ManufacturingDate, @Unit, @Description, @Supplier, @ImagePath, @BarcodeImagePath, @QRCodeImagePath)";
 
                     // Create a SQL command with the query and connection
                     using (SqlCommand cmd = new SqlCommand(query, conn))
@@ -50,6 +50,8 @@ namespace ELECTIVE
                         cmd.Parameters.AddWithValue("@Unit", product.Unit ?? "");
                         cmd.Parameters.AddWithValue("@Description", product.Description ?? "");
                         cmd.Parameters.AddWithValue("@ImagePath", product.ImagePath ?? "");
+                        cmd.Parameters.AddWithValue("@BarcodeImagePath", product.BarcodeImagePath ?? "");
+                        cmd.Parameters.AddWithValue("@QRCodeImagePath", product.QRCodeImagePath ?? "");
 
                         // Execute the INSERT command
                         // ExecuteNonQuery returns the number of rows affected (should be 1 if successful)
@@ -107,6 +109,8 @@ namespace ELECTIVE
                                     Unit = reader["Unit"].ToString(),
                                     Description = reader["Description"].ToString(),
                                     ImagePath = reader["ImagePath"].ToString(),
+                                    BarcodeImagePath = reader["BarcodeImagePath"].ToString(), 
+                                    QRCodeImagePath = reader["QRCodeImagePath"].ToString(),
                                     CreatedDate = (DateTime)reader["CreatedDate"],
                                     UpdatedDate = (DateTime)reader["UpdatedDate"]
                                 };
@@ -166,6 +170,8 @@ namespace ELECTIVE
                                     Unit = reader["Unit"].ToString(),
                                     Description = reader["Description"].ToString(),
                                     ImagePath = reader["ImagePath"].ToString(),
+                                    BarcodeImagePath = reader["BarcodeImagePath"].ToString(), 
+                                    QRCodeImagePath = reader["QRCodeImagePath"].ToString(),
                                     CreatedDate = (DateTime)reader["CreatedDate"],
                                     UpdatedDate = (DateTime)reader["UpdatedDate"]
                                 };
@@ -222,6 +228,8 @@ namespace ELECTIVE
                                     Unit = reader["Unit"].ToString(),
                                     Description = reader["Description"].ToString(),
                                     ImagePath = reader["ImagePath"].ToString(),
+                                    BarcodeImagePath = reader["BarcodeImagePath"].ToString(), 
+                                    QRCodeImagePath = reader["QRCodeImagePath"].ToString(),
                                     CreatedDate = (DateTime)reader["CreatedDate"],
                                     UpdatedDate = (DateTime)reader["UpdatedDate"]
                                 };
@@ -284,6 +292,8 @@ namespace ELECTIVE
                                     Unit = reader["Unit"].ToString(),
                                     Description = reader["Description"].ToString(),
                                     ImagePath = reader["ImagePath"].ToString(),
+                                    BarcodeImagePath = reader["BarcodeImagePath"].ToString(), 
+                                    QRCodeImagePath = reader["QRCodeImagePath"].ToString(),
                                     CreatedDate = (DateTime)reader["CreatedDate"],
                                     UpdatedDate = (DateTime)reader["UpdatedDate"]
                                 };
@@ -334,7 +344,9 @@ namespace ELECTIVE
                                     ManufacturingDate = @ManufacturingDate,
                                     Unit = @Unit,
                                     Description = @Description,
-                                    ImagePath = @ImagePath,
+                                    ImagePath = @ImagePath, 
+                                    BarcodeImagePath = @BarcodeImagePath,      // ← ADD THIS
+                                    QRCodeImagePath = @QRCodeImagePath,  
                                     UpdatedDate = GETDATE()
                                     WHERE ProductID = @ProductID";
 
@@ -353,6 +365,8 @@ namespace ELECTIVE
                         cmd.Parameters.AddWithValue("@Unit", product.Unit ?? "");
                         cmd.Parameters.AddWithValue("@Description", product.Description ?? "");
                         cmd.Parameters.AddWithValue("@ImagePath", product.ImagePath ?? "");
+                        cmd.Parameters.AddWithValue("@BarcodeImagePath", product.BarcodeImagePath ?? "");  
+                        cmd.Parameters.AddWithValue("@QRCodeImagePath", product.QRCodeImagePath ?? "");    
 
                         // Execute the UPDATE command
                         int rowsAffected = cmd.ExecuteNonQuery();
@@ -436,6 +450,8 @@ namespace ELECTIVE
                                     Unit = reader["Unit"].ToString(),
                                     Description = reader["Description"].ToString(),
                                     ImagePath = reader["ImagePath"].ToString(),
+                                    BarcodeImagePath = reader["BarcodeImagePath"].ToString(),  
+                                    QRCodeImagePath = reader["QRCodeImagePath"].ToString(),
                                     CreatedDate = (DateTime)reader["CreatedDate"],
                                     UpdatedDate = (DateTime)reader["UpdatedDate"]
                                 };

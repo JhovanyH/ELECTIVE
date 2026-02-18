@@ -99,6 +99,15 @@ namespace ELECTIVE
         public DateTime UpdatedDate { get; set; }
 
         // Constructor - helps create a new Product easily
+
+        public string BarcodeImagePath { get; set; }
+
+        /// <summary>
+        /// Path to the QR code image file
+        /// </summary>
+        public string QRCodeImagePath { get; set; }
+
+        
         public Product()
         {
             // Set default values

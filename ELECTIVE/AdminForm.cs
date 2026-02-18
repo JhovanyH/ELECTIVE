@@ -14,6 +14,8 @@ namespace ELECTIVE
     {
         private Product currentProduct = null;
         private string selectedImagePath = null;
+        private string selectedBarcodeImagePath = null;
+        private string selectedQRCodeImagePath = null;
         public AdminForm()
         {
             InitializeComponent();
@@ -116,6 +118,10 @@ namespace ELECTIVE
             dtpMfgDate.Value = DateTime.Now;
             dtpExpDate.Value = DateTime.Now;
             pbProductImage.Image = null;
+            barcode_imagebox = null;
+            qrImagebox = null;
+            selectedBarcodeImagePath = null;
+            selectedQRCodeImagePath = null;
             selectedImagePath = null;
             txtBarcode.Focus();
         }
@@ -163,6 +169,9 @@ namespace ELECTIVE
                 newProduct.ManufacturingDate = dtpMfgDate.Value;
                 newProduct.ExpirationDate = dtpExpDate.Value;
                 newProduct.ImagePath = selectedImagePath; // Include image path
+                newProduct.BarcodeImagePath = selectedBarcodeImagePath;
+                newProduct.QRCodeImagePath = selectedQRCodeImagePath;
+
 
                 // Save
                 if (ProductDAL.AddProduct(newProduct))
@@ -366,9 +375,114 @@ namespace ELECTIVE
                             pbProductImage.Image = null;
                             selectedImagePath = null;
                         }
+                        //Load barcode image(if you add BarcodeImagePath to Product class)
+                        if (!string.IsNullOrEmpty(currentProduct.BarcodeImagePath) && File.Exists(currentProduct.BarcodeImagePath))
+                        {
+                            try
+                            {
+                                barcode_imagebox.Image = Image.FromFile(currentProduct.BarcodeImagePath);
+                                barcode_imagebox.SizeMode = PictureBoxSizeMode.Zoom;
+                                selectedBarcodeImagePath = currentProduct.BarcodeImagePath;
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show("Error loading barcode: " + ex.Message);
+                            }
+                        }
+                        else
+                        {
+                            barcode_imagebox.Image = null;
+                            selectedBarcodeImagePath = null;
+                        }
+
+                        if (!string.IsNullOrEmpty(currentProduct.QRCodeImagePath) && File.Exists(currentProduct.QRCodeImagePath))
+                        {
+                            try
+                            {
+                                qrImagebox.Image = Image.FromFile(currentProduct.BarcodeImagePath);
+                                qrImagebox.SizeMode = PictureBoxSizeMode.Zoom;
+                                selectedQRCodeImagePath = currentProduct.QRCodeImagePath;
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show("Error loading barcode: " + ex.Message);
+                            }
+                        }
+                        else
+                        {
+                            qrImagebox.Image = null;
+                            selectedQRCodeImagePath = null;
+                        }
                     }
                 }
             }
+        }
+
+        private void groupBox2_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label13_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void browse_barcodeImage_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                openFileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp;*.gif";
+                openFileDialog.Title = "Select barcode image";
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    selectedBarcodeImagePath = openFileDialog.FileName;
+
+                    // Display image in PictureBox
+                    Image image = Image.FromFile(selectedBarcodeImagePath);
+                    barcode_imagebox.Image = image;
+                    qrImagebox.SizeMode = PictureBoxSizeMode.StretchImage;
+
+                    MessageBox.Show("Barcode image selected successfully!", "Success");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error selecting barcode image: " + ex.Message);
+            }
+        }
+
+        private void browse_qrimageBox_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                openFileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp;*.gif";
+                openFileDialog.Title = "Select QR code image";
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    selectedQRCodeImagePath = openFileDialog.FileName;
+
+                    // Display image in PictureBox
+                    Image image = Image.FromFile(selectedQRCodeImagePath);
+                    barcode_imagebox.Image = image;
+                    qrImagebox.SizeMode = PictureBoxSizeMode.Zoom;
+
+                    MessageBox.Show("QR code image selected successfully!", "Success");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error selecting QR code image: " + ex.Message);
+            }
+        }
+
+        private void dgvProducts_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }
