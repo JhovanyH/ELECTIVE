@@ -43,14 +43,33 @@
             lblTax = new TextBox();
             label7 = new Label();
             lblTotal = new TextBox();
-            numQuantity = new NumericUpDown();
-            label8 = new Label();
+            lblQuantityDisplay = new Label();
             btnAddToCart = new Button();
             btnRemoveItem = new Button();
             btnClearCart = new Button();
             btnCheckOut = new Button();
             dgvCart = new DataGridView();
-            ((System.ComponentModel.ISupportInitialize)numQuantity).BeginInit();
+            searchbtton = new Button();
+            cmbDiscount = new ComboBox();
+            lblDiscount = new TextBox();
+            txtCashGiven = new TextBox();
+            txtChange = new TextBox();
+            btnCalculateChange = new Button();
+            btnquantityplus = new Button();
+            button1 = new Button();
+            button7click = new Button();
+            button8click = new Button();
+            button9click = new Button();
+            button4click = new Button();
+            button5click = new Button();
+            button6click = new Button();
+            button1click = new Button();
+            button2click = new Button();
+            button3click = new Button();
+            button0 = new Button();
+            btnclearbarcode = new Button();
+            lblPricePreview = new Label();
+            buttondecimal = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvCart).BeginInit();
             SuspendLayout();
             // 
@@ -76,7 +95,7 @@
             // 
             // panel1
             // 
-            panel1.Location = new Point(1124, 626);
+            panel1.Location = new Point(1148, 382);
             panel1.Name = "panel1";
             panel1.Size = new Size(250, 125);
             panel1.TabIndex = 2;
@@ -195,23 +214,15 @@
             lblTotal.Size = new Size(149, 24);
             lblTotal.TabIndex = 14;
             // 
-            // numQuantity
+            // lblQuantityDisplay
             // 
-            numQuantity.BackColor = SystemColors.Info;
-            numQuantity.Location = new Point(192, 409);
-            numQuantity.Name = "numQuantity";
-            numQuantity.Size = new Size(150, 27);
-            numQuantity.TabIndex = 15;
-            // 
-            // label8
-            // 
-            label8.AutoSize = true;
-            label8.Font = new Font("Courier New", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label8.Location = new Point(73, 419);
-            label8.Name = "label8";
-            label8.Size = new Size(89, 17);
-            label8.TabIndex = 16;
-            label8.Text = "QUANTITY:";
+            lblQuantityDisplay.AutoSize = true;
+            lblQuantityDisplay.Font = new Font("Courier New", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblQuantityDisplay.Location = new Point(1124, 44);
+            lblQuantityDisplay.Name = "lblQuantityDisplay";
+            lblQuantityDisplay.Size = new Size(89, 17);
+            lblQuantityDisplay.TabIndex = 16;
+            lblQuantityDisplay.Text = "QUANTITY:";
             // 
             // btnAddToCart
             // 
@@ -259,24 +270,268 @@
             // dgvCart
             // 
             dgvCart.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvCart.Location = new Point(709, 105);
+            dgvCart.Location = new Point(733, 114);
             dgvCart.Name = "dgvCart";
             dgvCart.RowHeadersWidth = 51;
             dgvCart.Size = new Size(641, 249);
             dgvCart.TabIndex = 22;
+            // 
+            // searchbtton
+            // 
+            searchbtton.Location = new Point(746, 27);
+            searchbtton.Name = "searchbtton";
+            searchbtton.Size = new Size(136, 53);
+            searchbtton.TabIndex = 23;
+            searchbtton.Text = "SEARCH";
+            searchbtton.UseVisualStyleBackColor = true;
+            searchbtton.Click += searchbtton_Click;
+            // 
+            // cmbDiscount
+            // 
+            cmbDiscount.BackColor = SystemColors.Info;
+            cmbDiscount.FormattingEnabled = true;
+            cmbDiscount.Location = new Point(209, 513);
+            cmbDiscount.Name = "cmbDiscount";
+            cmbDiscount.Size = new Size(151, 28);
+            cmbDiscount.TabIndex = 24;
+            cmbDiscount.SelectedIndexChanged += cmbDiscount_SelectedIndexChanged;
+            // 
+            // lblDiscount
+            // 
+            lblDiscount.BackColor = SystemColors.Info;
+            lblDiscount.Font = new Font("Courier New", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblDiscount.Location = new Point(161, 571);
+            lblDiscount.Name = "lblDiscount";
+            lblDiscount.Size = new Size(183, 24);
+            lblDiscount.TabIndex = 25;
+            // 
+            // txtCashGiven
+            // 
+            txtCashGiven.BackColor = SystemColors.Info;
+            txtCashGiven.Font = new Font("Courier New", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            txtCashGiven.Location = new Point(73, 643);
+            txtCashGiven.Name = "txtCashGiven";
+            txtCashGiven.Size = new Size(183, 24);
+            txtCashGiven.TabIndex = 26;
+            // 
+            // txtChange
+            // 
+            txtChange.BackColor = SystemColors.Info;
+            txtChange.Font = new Font("Courier New", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            txtChange.Location = new Point(522, 689);
+            txtChange.Name = "txtChange";
+            txtChange.Size = new Size(183, 24);
+            txtChange.TabIndex = 27;
+            // 
+            // btnCalculateChange
+            // 
+            btnCalculateChange.Location = new Point(415, 488);
+            btnCalculateChange.Name = "btnCalculateChange";
+            btnCalculateChange.Size = new Size(136, 53);
+            btnCalculateChange.TabIndex = 28;
+            btnCalculateChange.Text = "CALCULATE";
+            btnCalculateChange.UseVisualStyleBackColor = true;
+            btnCalculateChange.Click += btnCalculateChange_Click;
+            // 
+            // btnquantityplus
+            // 
+            btnquantityplus.FlatStyle = FlatStyle.Flat;
+            btnquantityplus.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnquantityplus.Location = new Point(1070, 20);
+            btnquantityplus.Name = "btnquantityplus";
+            btnquantityplus.Size = new Size(48, 47);
+            btnquantityplus.TabIndex = 29;
+            btnquantityplus.Text = "+";
+            btnquantityplus.TextAlign = ContentAlignment.MiddleRight;
+            btnquantityplus.UseVisualStyleBackColor = true;
+            btnquantityplus.Click += btnquantityplus_Click;
+            // 
+            // button1
+            // 
+            button1.FlatStyle = FlatStyle.Flat;
+            button1.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            button1.Location = new Point(1220, 23);
+            button1.Name = "button1";
+            button1.Size = new Size(48, 47);
+            button1.TabIndex = 30;
+            button1.Text = "-";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
+            // 
+            // button7click
+            // 
+            button7click.Font = new Font("Courier New", 10.2F, FontStyle.Bold);
+            button7click.Location = new Point(746, 454);
+            button7click.Name = "button7click";
+            button7click.Size = new Size(64, 53);
+            button7click.TabIndex = 31;
+            button7click.Text = "7";
+            button7click.UseVisualStyleBackColor = true;
+            button7click.Click += button7click_Click;
+            // 
+            // button8click
+            // 
+            button8click.Font = new Font("Courier New", 10.2F, FontStyle.Bold);
+            button8click.Location = new Point(816, 454);
+            button8click.Name = "button8click";
+            button8click.Size = new Size(64, 53);
+            button8click.TabIndex = 32;
+            button8click.Text = "8";
+            button8click.UseVisualStyleBackColor = true;
+            button8click.Click += button8click_Click;
+            // 
+            // button9click
+            // 
+            button9click.Font = new Font("Courier New", 10.2F, FontStyle.Bold);
+            button9click.Location = new Point(886, 454);
+            button9click.Name = "button9click";
+            button9click.Size = new Size(64, 53);
+            button9click.TabIndex = 33;
+            button9click.Text = "9";
+            button9click.UseVisualStyleBackColor = true;
+            button9click.Click += button9click_Click;
+            // 
+            // button4click
+            // 
+            button4click.Font = new Font("Courier New", 10.2F, FontStyle.Bold);
+            button4click.Location = new Point(746, 513);
+            button4click.Name = "button4click";
+            button4click.Size = new Size(64, 53);
+            button4click.TabIndex = 34;
+            button4click.Text = "4";
+            button4click.UseVisualStyleBackColor = true;
+            button4click.Click += button4click_Click;
+            // 
+            // button5click
+            // 
+            button5click.Font = new Font("Courier New", 10.2F, FontStyle.Bold);
+            button5click.Location = new Point(816, 513);
+            button5click.Name = "button5click";
+            button5click.Size = new Size(64, 53);
+            button5click.TabIndex = 35;
+            button5click.Text = "5";
+            button5click.UseVisualStyleBackColor = true;
+            button5click.Click += button5click_Click;
+            // 
+            // button6click
+            // 
+            button6click.Font = new Font("Courier New", 10.2F, FontStyle.Bold);
+            button6click.Location = new Point(886, 513);
+            button6click.Name = "button6click";
+            button6click.Size = new Size(64, 53);
+            button6click.TabIndex = 36;
+            button6click.Text = "6";
+            button6click.UseVisualStyleBackColor = true;
+            button6click.Click += button6click_Click;
+            // 
+            // button1click
+            // 
+            button1click.Font = new Font("Courier New", 10.2F, FontStyle.Bold);
+            button1click.Location = new Point(746, 572);
+            button1click.Name = "button1click";
+            button1click.Size = new Size(64, 53);
+            button1click.TabIndex = 37;
+            button1click.Text = "1";
+            button1click.UseVisualStyleBackColor = true;
+            button1click.Click += button1click_Click;
+            // 
+            // button2click
+            // 
+            button2click.Font = new Font("Courier New", 10.2F, FontStyle.Bold);
+            button2click.Location = new Point(816, 571);
+            button2click.Name = "button2click";
+            button2click.Size = new Size(64, 53);
+            button2click.TabIndex = 38;
+            button2click.Text = "2";
+            button2click.UseVisualStyleBackColor = true;
+            button2click.Click += button2click_Click;
+            // 
+            // button3click
+            // 
+            button3click.Font = new Font("Courier New", 10.2F, FontStyle.Bold);
+            button3click.Location = new Point(886, 572);
+            button3click.Name = "button3click";
+            button3click.Size = new Size(64, 53);
+            button3click.TabIndex = 39;
+            button3click.Text = "3";
+            button3click.UseVisualStyleBackColor = true;
+            button3click.Click += button3click_Click;
+            // 
+            // button0
+            // 
+            button0.Font = new Font("Courier New", 10.2F, FontStyle.Bold);
+            button0.Location = new Point(746, 631);
+            button0.Name = "button0";
+            button0.Size = new Size(64, 53);
+            button0.TabIndex = 40;
+            button0.Text = "0";
+            button0.UseVisualStyleBackColor = true;
+            button0.Click += button0_Click;
+            // 
+            // btnclearbarcode
+            // 
+            btnclearbarcode.Font = new Font("Courier New", 10.2F, FontStyle.Bold);
+            btnclearbarcode.Location = new Point(984, 631);
+            btnclearbarcode.Name = "btnclearbarcode";
+            btnclearbarcode.Size = new Size(134, 53);
+            btnclearbarcode.TabIndex = 41;
+            btnclearbarcode.Text = "CLEAR";
+            btnclearbarcode.UseVisualStyleBackColor = true;
+            btnclearbarcode.Click += btnclearbarcode_Click;
+            // 
+            // lblPricePreview
+            // 
+            lblPricePreview.AutoSize = true;
+            lblPricePreview.Font = new Font("Courier New", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblPricePreview.Location = new Point(668, 391);
+            lblPricePreview.Name = "lblPricePreview";
+            lblPricePreview.Size = new Size(17, 17);
+            lblPricePreview.TabIndex = 42;
+            lblPricePreview.Text = "0";
+            // 
+            // buttondecimal
+            // 
+            buttondecimal.Font = new Font("Courier New", 10.2F, FontStyle.Bold);
+            buttondecimal.Location = new Point(818, 631);
+            buttondecimal.Name = "buttondecimal";
+            buttondecimal.Size = new Size(64, 53);
+            buttondecimal.TabIndex = 43;
+            buttondecimal.Text = ".";
+            buttondecimal.UseVisualStyleBackColor = true;
+            buttondecimal.Click += buttondecimal_Click;
             // 
             // CashierInterface
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1398, 799);
+            Controls.Add(buttondecimal);
+            Controls.Add(lblPricePreview);
+            Controls.Add(btnclearbarcode);
+            Controls.Add(button0);
+            Controls.Add(button3click);
+            Controls.Add(button2click);
+            Controls.Add(button1click);
+            Controls.Add(button6click);
+            Controls.Add(button5click);
+            Controls.Add(button4click);
+            Controls.Add(button9click);
+            Controls.Add(button8click);
+            Controls.Add(button7click);
+            Controls.Add(button1);
+            Controls.Add(btnquantityplus);
+            Controls.Add(btnCalculateChange);
+            Controls.Add(txtChange);
+            Controls.Add(txtCashGiven);
+            Controls.Add(lblDiscount);
+            Controls.Add(cmbDiscount);
+            Controls.Add(searchbtton);
             Controls.Add(dgvCart);
             Controls.Add(btnCheckOut);
             Controls.Add(btnClearCart);
             Controls.Add(btnRemoveItem);
             Controls.Add(btnAddToCart);
-            Controls.Add(label8);
-            Controls.Add(numQuantity);
+            Controls.Add(lblQuantityDisplay);
             Controls.Add(lblTotal);
             Controls.Add(label7);
             Controls.Add(lblTax);
@@ -295,7 +550,6 @@
             Name = "CashierInterface";
             Text = "CashierInterface";
             Load += CashierInterface_Load;
-            ((System.ComponentModel.ISupportInitialize)numQuantity).EndInit();
             ((System.ComponentModel.ISupportInitialize)dgvCart).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -318,12 +572,32 @@
         private TextBox lblTax;
         private Label label7;
         private TextBox lblTotal;
-        private NumericUpDown numQuantity;
-        private Label label8;
+        private Label lblQuantityDisplay;
         private Button btnAddToCart;
         private Button btnRemoveItem;
         private Button btnClearCart;
         private Button btnCheckOut;
         private DataGridView dgvCart;
+        private Button searchbtton;
+        private ComboBox cmbDiscount;
+        private TextBox lblDiscount;
+        private TextBox txtCashGiven;
+        private TextBox txtChange;
+        private Button btnCalculateChange;
+        private Button btnquantityplus;
+        private Button button1;
+        private Button button7click;
+        private Button button8click;
+        private Button button9click;
+        private Button button4click;
+        private Button button5click;
+        private Button button6click;
+        private Button button1click;
+        private Button button2click;
+        private Button button3click;
+        private Button button0;
+        private Button btnclearbarcode;
+        private Label lblPricePreview;
+        private Button buttondecimal;
     }
 }

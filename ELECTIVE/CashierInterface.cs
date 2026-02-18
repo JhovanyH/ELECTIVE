@@ -15,6 +15,10 @@ namespace ELECTIVE
     {
         private List<CartItem> cart = new List<CartItem>();
         private decimal TAX_RATE = 0.05m; // 5% tax
+
+        private int currentQuantity = 1; // Track current quantity
+        private Control lastFocusedControl = null;
+
         public CashierInterface()
         {
             InitializeComponent();
@@ -24,7 +28,70 @@ namespace ELECTIVE
         {
             // Focus on barcode field when form opens
             txtBarcode.Focus();
+            lastFocusedControl = txtBarcode; // Remember which textbox is active
+
+            // Initialize DataGridView columns at start
+            InitializeCartGrid();
+
+            // Load discount options
+            LoadDiscountOptions();
+
+            lblQuantityDisplay.Text = "1";
+
+            // Add these event handlers to track focus
+            txtBarcode.Enter += (s, e) => lastFocusedControl = txtBarcode;
+            txtCashGiven.Enter += (s, e) => lastFocusedControl = txtCashGiven;
+            txtChange.Enter += (s, e) => lastFocusedControl = txtChange;
         }
+
+        private void InitializeCartGrid()
+        {
+            try
+            {
+                dgvCart.AutoGenerateColumns = false;
+                dgvCart.Columns.Clear();
+
+                // Add columns manually
+                dgvCart.Columns.Add("ProductID", "ID");
+                dgvCart.Columns.Add("ProductName", "Product Name");
+                dgvCart.Columns.Add("Quantity", "Quantity");
+                dgvCart.Columns.Add("UnitPrice", "Unit Price");
+                dgvCart.Columns.Add("TotalPrice", "Total Price");
+
+                // Set column properties
+                dgvCart.Columns["ProductID"].Visible = false;
+                dgvCart.Columns["ProductName"].Width = 150;
+                dgvCart.Columns["Quantity"].Width = 80;
+                dgvCart.Columns["UnitPrice"].Width = 100;
+                dgvCart.Columns["TotalPrice"].Width = 100;
+
+                // Allow row selection
+                dgvCart.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error initializing grid: " + ex.Message);
+            }
+        }
+
+        private void LoadDiscountOptions()
+        {
+            try
+            {
+                cmbDiscount.Items.Clear();
+                cmbDiscount.Items.Add("No Discount");
+                cmbDiscount.Items.Add("Senior Citizen (10%)");
+                cmbDiscount.Items.Add("PWD (15%)");
+                cmbDiscount.Items.Add("Membership (5%)");
+                cmbDiscount.SelectedIndex = 0; // Default: No Discount
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error loading discounts: " + ex.Message);
+            }
+        }
+
+
 
         private void txtBarcode_KeyDown(object sender, KeyEventArgs e)
         {
@@ -59,9 +126,7 @@ namespace ELECTIVE
                             lblProductName.Text += " (Already in cart)";
                         }
 
-                        // Set quantity to 1 by default
-                        numQuantity.Value = 1;
-                        numQuantity.Focus();
+
                     }
                     else
                     {
@@ -88,17 +153,11 @@ namespace ELECTIVE
         {
             try
             {
-                if (string.IsNullOrEmpty(txtBarcode.Text) && lblProductName.Text == "Product: ")
-                {
-                    MessageBox.Show("Please scan a barcode first");
-                    return;
-                }
-
-                // Get the last scanned barcode from label or textbox
                 string barcode = txtBarcode.Text.Trim();
+
                 if (string.IsNullOrEmpty(barcode))
                 {
-                    MessageBox.Show("Please scan a barcode");
+                    MessageBox.Show("Please scan a barcode first");
                     return;
                 }
 
@@ -110,13 +169,7 @@ namespace ELECTIVE
                     return;
                 }
 
-                int quantity = (int)numQuantity.Value;
-
-                if (quantity <= 0)
-                {
-                    MessageBox.Show("Please enter a valid quantity");
-                    return;
-                }
+                int quantity = currentQuantity;
 
                 if (quantity > product.Quantity)
                 {
@@ -124,38 +177,34 @@ namespace ELECTIVE
                     return;
                 }
 
-                // Add to cart
                 CartItem existingItem = cart.Find(item => item.ProductID == product.ProductID);
 
                 if (existingItem != null)
                 {
-                    // Item already in cart - increase quantity
                     existingItem.Quantity += quantity;
                     existingItem.TotalPrice = existingItem.UnitPrice * existingItem.Quantity;
                 }
                 else
                 {
-                    // New item - add to cart
-                    CartItem newItem = new CartItem
+                    cart.Add(new CartItem
                     {
                         ProductID = product.ProductID,
                         ProductName = product.ProductName,
                         Quantity = quantity,
                         UnitPrice = product.Price,
                         TotalPrice = product.Price * quantity
-                    };
-                    cart.Add(newItem);
+                    });
                 }
 
-                // Refresh cart display
                 RefreshCart();
 
-                // Clear form
+                // Clear only product info, NOT price preview
                 txtBarcode.Clear();
                 lblProductName.Text = "Product: ";
                 lblProductPrice.Text = "Price: $0.00";
                 lblAvailableQty.Text = "Available: 0";
-                numQuantity.Value = 1;
+                currentQuantity = 1;
+                lblQuantityDisplay.Text = "1";
                 txtBarcode.Focus();
 
                 MessageBox.Show(product.ProductName + " added to cart!", "Success");
@@ -169,19 +218,22 @@ namespace ELECTIVE
         {
             try
             {
-                // Clear grid
-                dgvCart.DataSource = null;
+                // Clear existing rows
+                dgvCart.Rows.Clear();
 
-                // Display cart items
-                dgvCart.DataSource = new List<CartItem>(cart);
-
-                // Adjust columns
-                if (dgvCart.Columns.Count > 0)
+                // Add cart items to grid
+                foreach (CartItem item in cart)
                 {
-                    dgvCart.Columns["ProductID"].Visible = false;
+                    dgvCart.Rows.Add(
+                        item.ProductID,
+                        item.ProductName,
+                        item.Quantity,
+                        item.UnitPrice.ToString("0.00"),
+                        item.TotalPrice.ToString("0.00")
+                    );
                 }
 
-                // Calculate totals
+                // Calculate totals with discount
                 CalculateTotals();
             }
             catch (Exception ex)
@@ -198,12 +250,37 @@ namespace ELECTIVE
                 subtotal += item.TotalPrice;
             }
 
-            decimal tax = subtotal * TAX_RATE;
-            decimal total = subtotal + tax;
+            // Get discount percentage
+            decimal discountPercent = GetDiscountPercent();
+            decimal discountAmount = subtotal * discountPercent;
+            decimal subtotalAfterDiscount = subtotal - discountAmount;
+
+            decimal tax = subtotalAfterDiscount * TAX_RATE;
+            decimal total = subtotalAfterDiscount + tax;
 
             lblSubtotal.Text = "Subtotal: $" + subtotal.ToString("0.00");
+            lblDiscount.Text = "Discount (" + (discountPercent * 100) + "%): -$" + discountAmount.ToString("0.00");
             lblTax.Text = "Tax (5%): $" + tax.ToString("0.00");
             lblTotal.Text = "TOTAL: $" + total.ToString("0.00");
+
+            lblPricePreview.Text = "Cart Total: $" + total.ToString("0.00");
+        }
+
+        private decimal GetDiscountPercent()
+        {
+            string selectedDiscount = cmbDiscount.SelectedItem?.ToString() ?? "No Discount";
+
+            switch (selectedDiscount)
+            {
+                case "Senior Citizen (10%)":
+                    return 0.10m;
+                case "PWD (15%)":
+                    return 0.15m;
+                case "Membership (5%)":
+                    return 0.05m;
+                default:
+                    return 0.0m;
+            }
         }
 
         private void btnRemoveItem_Click(object sender, EventArgs e)
@@ -241,7 +318,13 @@ namespace ELECTIVE
                 lblProductName.Text = "Product: ";
                 lblProductPrice.Text = "Price: $0.00";
                 lblAvailableQty.Text = "Available: 0";
+                lblPricePreview.Text = "Total: $0.00";
                 txtBarcode.Clear();
+                txtCashGiven.Clear();
+                txtChange.Clear();
+                cmbDiscount.SelectedIndex = 0;
+                currentQuantity = 1;
+                lblQuantityDisplay.Text = "1";
                 txtBarcode.Focus();
             }
         }
@@ -256,40 +339,81 @@ namespace ELECTIVE
                     return;
                 }
 
-                // Calculate total
-                decimal subtotal = 0;
-                foreach (CartItem item in cart)
+                if (string.IsNullOrEmpty(txtChange.Text))
                 {
-                    subtotal += item.TotalPrice;
+                    MessageBox.Show("Please calculate change first!");
+                    return;
                 }
 
-                decimal tax = subtotal * TAX_RATE;
-                decimal total = subtotal + tax;
+                // Get total amount
+                string totalText = lblTotal.Text.Replace("TOTAL: $", "").Trim();
+                decimal total = decimal.Parse(totalText);
 
                 // Confirm purchase
                 DialogResult result = MessageBox.Show(
                     "Complete the sale?\n\n" +
-                    "Subtotal: $" + subtotal.ToString("0.00") + "\n" +
-                    "Tax: $" + tax.ToString("0.00") + "\n" +
-                    "TOTAL: $" + total.ToString("0.00"),
+                    lblSubtotal.Text + "\n" +
+                    lblDiscount.Text + "\n" +
+                    lblTax.Text + "\n" +
+                    lblTotal.Text,
                     "Confirm Sale", MessageBoxButtons.YesNo);
 
                 if (result == DialogResult.Yes)
                 {
-                    // Show receipt
-                    ShowReceipt(subtotal, tax, total);
+                    // ==========================================
+                    // SAVE TO DATABASE
+                    // ==========================================
 
-                    // Clear cart and reset
-                    cart.Clear();
-                    RefreshCart();
-                    lblProductName.Text = "Product: ";
-                    lblProductPrice.Text = "Price: $0.00";
-                    lblAvailableQty.Text = "Available: 0";
-                    txtBarcode.Clear();
-                    numQuantity.Value = 1;
-                    txtBarcode.Focus();
+                    // Step 1: Create a new Sale record
+                    int saleID = ProductDAL.AddSale(total, "Completed");
 
-                    MessageBox.Show("Sale completed successfully!", "Success");
+                    if (saleID > 0)
+                    {
+                        bool allItemsSaved = true;
+
+                        // Step 2: For each item in cart, save SaleDetail and update stock
+                        foreach (CartItem item in cart)
+                        {
+                            // Save the item to SaleDetails table
+                            bool detailSaved = ProductDAL.AddSaleDetail(
+                                saleID,
+                                item.ProductID,
+                                item.Quantity,
+                                item.UnitPrice,
+                                item.TotalPrice
+                            );
+
+                            // Decrease the product stock
+                            bool stockUpdated = ProductDAL.DecreaseProductStock(
+                                item.ProductID,
+                                item.Quantity
+                            );
+
+                            if (!detailSaved || !stockUpdated)
+                            {
+                                allItemsSaved = false;
+                            }
+                        }
+
+                        if (allItemsSaved)
+                        {
+                            // Show receipt
+                            ShowReceipt();
+
+                            // Clear everything
+                            ClearEverything();
+
+                            MessageBox.Show("Sale completed successfully! Transaction saved.", "Success");
+                        }
+                        else
+                        {
+                            MessageBox.Show("Sale completed but some items failed to save properly.", "Warning");
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Error saving sale to database!", "Error");
+                    }
                 }
             }
             catch (Exception ex)
@@ -297,8 +421,12 @@ namespace ELECTIVE
                 MessageBox.Show("Error: " + ex.Message);
             }
         }
-        private void ShowReceipt(decimal subtotal, decimal tax, decimal total)
+        private void ShowReceipt()
         {
+            string totalText = lblTotal.Text.Replace("TOTAL: $", "").Trim();
+            decimal cashGiven = decimal.Parse(txtCashGiven.Text);
+            decimal change = decimal.Parse(txtChange.Text);
+
             string receipt = "========== RECEIPT ==========\n";
             receipt += DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "\n\n";
 
@@ -315,15 +443,274 @@ namespace ELECTIVE
             }
 
             receipt += "------------------------------\n";
-            receipt += "Subtotal: $" + subtotal.ToString("0.00") + "\n";
-            receipt += "Tax (5%): $" + tax.ToString("0.00") + "\n";
-            receipt += "TOTAL: $" + total.ToString("0.00") + "\n";
+            receipt += lblSubtotal.Text + "\n";
+            receipt += lblDiscount.Text + "\n";
+            receipt += lblTax.Text + "\n";
+            receipt += lblTotal.Text + "\n";
+            receipt += "------------------------------\n";
+            receipt += "Cash Given: $" + cashGiven.ToString("0.00") + "\n";
+            receipt += "Change: $" + change.ToString("0.00") + "\n";
             receipt += "=============================\n";
             receipt += "Thank you for your purchase!\n";
 
-            // Show receipt in message
             MessageBox.Show(receipt, "Receipt");
         }
+
+        private void searchbtton_Click(object sender, EventArgs e)
+        {
+
+            try
+            {
+                string barcode = txtBarcode.Text.Trim();
+
+                if (string.IsNullOrEmpty(barcode))
+                {
+                    MessageBox.Show("Please enter or scan a barcode");
+                    return;
+                }
+
+                // Look up product by barcode
+                Product product = ProductDAL.GetProductByBarcode(barcode);
+
+                if (product != null)
+                {
+                    // Display product info
+                    lblProductName.Text = "Product: " + product.ProductName;
+                    lblProductPrice.Text = "Price: $" + product.Price.ToString("0.00");
+                    lblAvailableQty.Text = "Available: " + product.Quantity;
+
+                    // Check if already in cart
+                    CartItem existingItem = cart.Find(item => item.ProductID == product.ProductID);
+
+                    if (existingItem != null)
+                    {
+                        lblProductName.Text += " (Already in cart)";
+                    }
+
+                    // Reset quantity to 1
+                    currentQuantity = 1;
+                    lblQuantityDisplay.Text = "1";
+                    UpdatePricePreview(product.Price);
+                }
+                else
+                {
+                    MessageBox.Show("Product not found! Check the barcode.", "Not Found");
+                    lblProductName.Text = "Product: Not Found";
+                    lblProductPrice.Text = "Price: $0.00";
+                    lblAvailableQty.Text = "Available: 0";
+                    lblPricePreview.Text = "Total: $0.00";
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+            }
+        }
+
+        private void cmbDiscount_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+            CalculateTotals();
+        }
+
+        private void btnCalculateChange_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(lblTotal.Text))
+                {
+                    MessageBox.Show("Cart is empty!");
+                    return;
+                }
+
+                // Extract total amount from label
+                string totalText = lblTotal.Text.Replace("TOTAL: $", "").Trim();
+                decimal total = decimal.Parse(totalText);
+
+                // Get cash given
+                if (string.IsNullOrEmpty(txtCashGiven.Text))
+                {
+                    MessageBox.Show("Please enter cash given");
+                    return;
+                }
+
+                decimal cashGiven = decimal.Parse(txtCashGiven.Text);
+
+                if (cashGiven < total)
+                {
+                    MessageBox.Show("Cash given is less than total amount!");
+                    return;
+                }
+
+                // Calculate change
+                decimal change = cashGiven - total;
+                txtChange.Text = change.ToString("0.00");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error calculating change: " + ex.Message);
+            }
+        }
+
+        private void btnquantityplus_Click(object sender, EventArgs e)
+        {
+            currentQuantity++;
+            lblQuantityDisplay.Text = currentQuantity.ToString();
+            UpdatePricePreview();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (currentQuantity > 1)
+            {
+                currentQuantity--;
+                lblQuantityDisplay.Text = currentQuantity.ToString();
+                UpdatePricePreview();
+            }
+        }
+        private void UpdatePricePreview(decimal price = 0)
+        {
+            try
+            {
+                // If price is 0, get it from the product
+                if (price == 0)
+                {
+                    string priceText = lblProductPrice.Text.Replace("Price: $", "").Trim();
+                    if (decimal.TryParse(priceText, out decimal parsedPrice))
+                    {
+                        price = parsedPrice;
+                    }
+                }
+
+                decimal totalPrice = price * currentQuantity;
+                lblPricePreview.Text = "Total: $" + totalPrice.ToString("0.00");
+            }
+            catch
+            {
+                lblPricePreview.Text = "Total: $0.00";
+            }
+        }
+
+        private void btnclearbarcode_Click(object sender, EventArgs e)
+        {
+            // Use lastFocusedControl to remember which textbox was active
+            if (lastFocusedControl == txtBarcode)
+            {
+                if (txtBarcode.Text.Length > 0)
+                {
+                    txtBarcode.Text = txtBarcode.Text.Substring(0, txtBarcode.Text.Length - 1);
+                }
+            }
+            else if (lastFocusedControl == txtCashGiven)
+            {
+                if (txtCashGiven.Text.Length > 0)
+                {
+                    txtCashGiven.Text = txtCashGiven.Text.Substring(0, txtCashGiven.Text.Length - 1);
+                }
+            }
+            else if (lastFocusedControl == txtChange)
+            {
+                if (txtChange.Text.Length > 0)
+                {
+                    txtChange.Text = txtChange.Text.Substring(0, txtChange.Text.Length - 1);
+                }
+            }
+
+            // Put focus back on the textbox after deleting
+            lastFocusedControl?.Focus();
+        }
+        
+
+    
+        
+        public void AddNumberToFocusedTextbox(string number)
+        {
+            if (lastFocusedControl == txtBarcode)
+                txtBarcode.Text += number;
+            else if (lastFocusedControl == txtCashGiven)
+                txtCashGiven.Text += number;
+            else if (lastFocusedControl == txtChange)
+                txtChange.Text += number;
+            else
+                txtBarcode.Text += number; // Default
+
+            // Keep focus on the textbox, not the button
+            lastFocusedControl?.Focus();
+        }
+
+        private void button0_Click(object sender, EventArgs e)
+        {
+            AddNumberToFocusedTextbox("0");
+        }
+
+        private void button1click_Click(object sender, EventArgs e)
+        {
+            AddNumberToFocusedTextbox("1");
+        }
+
+        private void button2click_Click(object sender, EventArgs e)
+        {
+            AddNumberToFocusedTextbox("2");
+        }
+
+        private void button3click_Click(object sender, EventArgs e)
+        {
+            AddNumberToFocusedTextbox("3");
+        }
+
+        private void button4click_Click(object sender, EventArgs e)
+        {
+            AddNumberToFocusedTextbox("4");
+        }
+
+        private void button5click_Click(object sender, EventArgs e)
+        {
+            AddNumberToFocusedTextbox("5");
+        }
+
+        private void button6click_Click(object sender, EventArgs e)
+        {
+            AddNumberToFocusedTextbox("6");
+        }
+
+        private void button7click_Click(object sender, EventArgs e)
+        {
+            AddNumberToFocusedTextbox("7");
+        }
+
+        private void button8click_Click(object sender, EventArgs e)
+        {
+            AddNumberToFocusedTextbox("8");
+        }
+
+        private void button9click_Click(object sender, EventArgs e)
+        {
+            AddNumberToFocusedTextbox("9");
+        }
+
+        private void buttondecimal_Click(object sender, EventArgs e)
+        {
+            AddNumberToFocusedTextbox(".");
+        }
+
+        // Helper method to clear everything
+        private void ClearEverything()
+        {
+            cart.Clear();
+            RefreshCart();
+            lblProductName.Text = "Product: ";
+            lblProductPrice.Text = "Price: $0.00";
+            lblAvailableQty.Text = "Available: 0";
+            lblPricePreview.Text = "Cart Total: $0.00";
+            txtBarcode.Clear();
+            txtCashGiven.Clear();
+            txtChange.Clear();
+            cmbDiscount.SelectedIndex = 0;
+            currentQuantity = 1;
+            lblQuantityDisplay.Text = "1";
+            txtBarcode.Focus();
+        }
+
     }
     public class CartItem
     {

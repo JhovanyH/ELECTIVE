@@ -109,7 +109,7 @@ namespace ELECTIVE
                                     Unit = reader["Unit"].ToString(),
                                     Description = reader["Description"].ToString(),
                                     ImagePath = reader["ImagePath"].ToString(),
-                                    BarcodeImagePath = reader["BarcodeImagePath"].ToString(), 
+                                    BarcodeImagePath = reader["BarcodeImagePath"].ToString(),
                                     QRCodeImagePath = reader["QRCodeImagePath"].ToString(),
                                     CreatedDate = (DateTime)reader["CreatedDate"],
                                     UpdatedDate = (DateTime)reader["UpdatedDate"]
@@ -170,7 +170,7 @@ namespace ELECTIVE
                                     Unit = reader["Unit"].ToString(),
                                     Description = reader["Description"].ToString(),
                                     ImagePath = reader["ImagePath"].ToString(),
-                                    BarcodeImagePath = reader["BarcodeImagePath"].ToString(), 
+                                    BarcodeImagePath = reader["BarcodeImagePath"].ToString(),
                                     QRCodeImagePath = reader["QRCodeImagePath"].ToString(),
                                     CreatedDate = (DateTime)reader["CreatedDate"],
                                     UpdatedDate = (DateTime)reader["UpdatedDate"]
@@ -228,7 +228,7 @@ namespace ELECTIVE
                                     Unit = reader["Unit"].ToString(),
                                     Description = reader["Description"].ToString(),
                                     ImagePath = reader["ImagePath"].ToString(),
-                                    BarcodeImagePath = reader["BarcodeImagePath"].ToString(), 
+                                    BarcodeImagePath = reader["BarcodeImagePath"].ToString(),
                                     QRCodeImagePath = reader["QRCodeImagePath"].ToString(),
                                     CreatedDate = (DateTime)reader["CreatedDate"],
                                     UpdatedDate = (DateTime)reader["UpdatedDate"]
@@ -292,7 +292,7 @@ namespace ELECTIVE
                                     Unit = reader["Unit"].ToString(),
                                     Description = reader["Description"].ToString(),
                                     ImagePath = reader["ImagePath"].ToString(),
-                                    BarcodeImagePath = reader["BarcodeImagePath"].ToString(), 
+                                    BarcodeImagePath = reader["BarcodeImagePath"].ToString(),
                                     QRCodeImagePath = reader["QRCodeImagePath"].ToString(),
                                     CreatedDate = (DateTime)reader["CreatedDate"],
                                     UpdatedDate = (DateTime)reader["UpdatedDate"]
@@ -365,8 +365,8 @@ namespace ELECTIVE
                         cmd.Parameters.AddWithValue("@Unit", product.Unit ?? "");
                         cmd.Parameters.AddWithValue("@Description", product.Description ?? "");
                         cmd.Parameters.AddWithValue("@ImagePath", product.ImagePath ?? "");
-                        cmd.Parameters.AddWithValue("@BarcodeImagePath", product.BarcodeImagePath ?? "");  
-                        cmd.Parameters.AddWithValue("@QRCodeImagePath", product.QRCodeImagePath ?? "");    
+                        cmd.Parameters.AddWithValue("@BarcodeImagePath", product.BarcodeImagePath ?? "");
+                        cmd.Parameters.AddWithValue("@QRCodeImagePath", product.QRCodeImagePath ?? "");
 
                         // Execute the UPDATE command
                         int rowsAffected = cmd.ExecuteNonQuery();
@@ -450,7 +450,7 @@ namespace ELECTIVE
                                     Unit = reader["Unit"].ToString(),
                                     Description = reader["Description"].ToString(),
                                     ImagePath = reader["ImagePath"].ToString(),
-                                    BarcodeImagePath = reader["BarcodeImagePath"].ToString(),  
+                                    BarcodeImagePath = reader["BarcodeImagePath"].ToString(),
                                     QRCodeImagePath = reader["QRCodeImagePath"].ToString(),
                                     CreatedDate = (DateTime)reader["CreatedDate"],
                                     UpdatedDate = (DateTime)reader["UpdatedDate"]
@@ -504,5 +504,106 @@ namespace ELECTIVE
                 return false;
             }
         }
+
+        public static bool DecreaseProductStock(int productID, int quantitySold)
+        {
+            try
+            {
+                using (SqlConnection conn = DatabaseConnection.GetConnection())
+                {
+                    string query = @"UPDATE Products 
+                            SET Quantity = Quantity - @QuantitySold,
+                                UpdatedDate = GETDATE()
+                            WHERE ProductID = @ProductID";
+
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@ProductID", productID);
+                        cmd.Parameters.AddWithValue("@QuantitySold", quantitySold);
+
+                        int rowsAffected = cmd.ExecuteNonQuery();
+                        return rowsAffected > 0;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error decreasing stock: " + ex.Message);
+                return false;
+            }
+        }
+
+       // ==========================================
+// SAVE SALE TO DATABASE
+// ==========================================
+public static int AddSale(decimal totalAmount, string status = "Completed")
+        {
+            try
+            {
+                using (SqlConnection conn = DatabaseConnection.GetConnection())
+                {
+                    string query = @"INSERT INTO Sales (SaleDate, TotalAmount, Status)
+                            VALUES (GETDATE(), @TotalAmount, @Status);
+                            SELECT SCOPE_IDENTITY();";
+
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@TotalAmount", totalAmount);
+                        cmd.Parameters.AddWithValue("@Status", status);
+
+                        // ExecuteScalar returns the SaleID
+                        object result = cmd.ExecuteScalar();
+                        if (result != null && int.TryParse(result.ToString(), out int saleID))
+                        {
+                            return saleID;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error saving sale: " + ex.Message);
+            }
+
+            return 0;
+        }
+
+
+        // ==========================================
+        // SAVE SALE DETAIL (Individual item in sale)
+        // ==========================================
+        public static bool AddSaleDetail(int saleID, int productID, int quantity,
+            decimal unitPrice, decimal totalPrice)
+        {
+            try
+            {
+                using (SqlConnection conn = DatabaseConnection.GetConnection())
+                {
+                    string query = @"INSERT INTO SaleDetails 
+                            (SaleID, ProductID, Quantity, UnitPrice, TotalPrice)
+                            VALUES 
+                            (@SaleID, @ProductID, @Quantity, @UnitPrice, @TotalPrice)";
+
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@SaleID", saleID);
+                        cmd.Parameters.AddWithValue("@ProductID", productID);
+                        cmd.Parameters.AddWithValue("@Quantity", quantity);
+                        cmd.Parameters.AddWithValue("@UnitPrice", unitPrice);
+                        cmd.Parameters.AddWithValue("@TotalPrice", totalPrice);
+
+                        int rowsAffected = cmd.ExecuteNonQuery();
+                        return rowsAffected > 0;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error saving sale detail: " + ex.Message);
+                return false;
+            }
+        }
+
+
     }
 }

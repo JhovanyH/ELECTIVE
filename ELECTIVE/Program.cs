@@ -12,6 +12,8 @@ namespace ELECTIVE
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
             Application.Run(new CashierInterface());
+            //Application.Run(new AdminForm());
+            //Application.Run(new DisplayForm());
         }
     }
 }
