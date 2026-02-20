@@ -84,6 +84,7 @@
             label13 = new Label();
             pictureBox1 = new PictureBox();
             panel8 = new Panel();
+            pbProductImage = new PictureBox();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvCart).BeginInit();
             panel2.SuspendLayout();
@@ -94,6 +95,7 @@
             panel7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panel8.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pbProductImage).BeginInit();
             SuspendLayout();
             // 
             // label1
@@ -133,6 +135,7 @@
             lblProductPrice.Font = new Font("Courier New", 10.8F, FontStyle.Bold | FontStyle.Underline, GraphicsUnit.Point, 0);
             lblProductPrice.Location = new Point(397, 10);
             lblProductPrice.Name = "lblProductPrice";
+            lblProductPrice.ReadOnly = true;
             lblProductPrice.Size = new Size(203, 21);
             lblProductPrice.TabIndex = 3;
             // 
@@ -153,6 +156,7 @@
             lblProductName.Font = new Font("Courier New", 10.8F, FontStyle.Bold | FontStyle.Underline, GraphicsUnit.Point, 0);
             lblProductName.Location = new Point(19, 10);
             lblProductName.Name = "lblProductName";
+            lblProductName.ReadOnly = true;
             lblProductName.Size = new Size(284, 21);
             lblProductName.TabIndex = 5;
             // 
@@ -183,6 +187,7 @@
             lblAvailableQty.Font = new Font("Courier New", 10.8F, FontStyle.Bold | FontStyle.Underline, GraphicsUnit.Point, 0);
             lblAvailableQty.Location = new Point(208, 53);
             lblAvailableQty.Name = "lblAvailableQty";
+            lblAvailableQty.ReadOnly = true;
             lblAvailableQty.Size = new Size(90, 21);
             lblAvailableQty.TabIndex = 8;
             // 
@@ -202,6 +207,7 @@
             lblSubtotal.Font = new Font("Courier New", 9F, FontStyle.Bold | FontStyle.Underline, GraphicsUnit.Point, 0);
             lblSubtotal.Location = new Point(18, 199);
             lblSubtotal.Name = "lblSubtotal";
+            lblSubtotal.ReadOnly = true;
             lblSubtotal.Size = new Size(247, 17);
             lblSubtotal.TabIndex = 10;
             // 
@@ -212,6 +218,7 @@
             lblTax.Font = new Font("Courier New", 9F, FontStyle.Bold | FontStyle.Underline, GraphicsUnit.Point, 0);
             lblTax.Location = new Point(397, 199);
             lblTax.Name = "lblTax";
+            lblTax.ReadOnly = true;
             lblTax.Size = new Size(183, 17);
             lblTax.TabIndex = 12;
             // 
@@ -232,6 +239,7 @@
             lblTotal.Font = new Font("Courier New", 9F, FontStyle.Bold | FontStyle.Underline, GraphicsUnit.Point, 0);
             lblTotal.Location = new Point(87, 239);
             lblTotal.Name = "lblTotal";
+            lblTotal.ReadOnly = true;
             lblTotal.Size = new Size(149, 17);
             lblTotal.TabIndex = 14;
             // 
@@ -247,45 +255,57 @@
             // 
             // btnAddToCart
             // 
-            btnAddToCart.Location = new Point(957, 495);
+            btnAddToCart.BackColor = Color.DeepSkyBlue;
+            btnAddToCart.FlatStyle = FlatStyle.Flat;
+            btnAddToCart.Font = new Font("Courier New", 13.8F, FontStyle.Bold);
+            btnAddToCart.Location = new Point(1304, 103);
             btnAddToCart.Name = "btnAddToCart";
-            btnAddToCart.Size = new Size(163, 96);
+            btnAddToCart.Size = new Size(163, 116);
             btnAddToCart.TabIndex = 17;
             btnAddToCart.Text = "ADD TO CART";
-            btnAddToCart.UseVisualStyleBackColor = true;
+            btnAddToCart.UseVisualStyleBackColor = false;
             btnAddToCart.Click += btnAddToCart_Click;
             // 
             // btnRemoveItem
             // 
-            btnRemoveItem.Location = new Point(957, 607);
+            btnRemoveItem.BackColor = Color.Maroon;
+            btnRemoveItem.FlatStyle = FlatStyle.Flat;
+            btnRemoveItem.Font = new Font("Courier New", 13.8F, FontStyle.Bold);
+            btnRemoveItem.Location = new Point(1304, 529);
             btnRemoveItem.Name = "btnRemoveItem";
             btnRemoveItem.RightToLeft = RightToLeft.No;
-            btnRemoveItem.Size = new Size(163, 96);
+            btnRemoveItem.Size = new Size(163, 116);
             btnRemoveItem.TabIndex = 18;
             btnRemoveItem.Text = "REMOVE ITEM";
-            btnRemoveItem.UseVisualStyleBackColor = true;
+            btnRemoveItem.UseVisualStyleBackColor = false;
             btnRemoveItem.Click += btnRemoveItem_Click;
             // 
             // btnClearCart
             // 
-            btnClearCart.Location = new Point(1126, 607);
+            btnClearCart.BackColor = Color.DarkOrange;
+            btnClearCart.FlatStyle = FlatStyle.Flat;
+            btnClearCart.Font = new Font("Courier New", 13.8F, FontStyle.Bold);
+            btnClearCart.Location = new Point(1304, 387);
             btnClearCart.Name = "btnClearCart";
             btnClearCart.RightToLeft = RightToLeft.No;
-            btnClearCart.Size = new Size(161, 96);
+            btnClearCart.Size = new Size(163, 116);
             btnClearCart.TabIndex = 20;
             btnClearCart.Text = "CLEAR CART";
-            btnClearCart.UseVisualStyleBackColor = true;
+            btnClearCart.UseVisualStyleBackColor = false;
             btnClearCart.Click += btnClearCart_Click;
             // 
             // btnCheckOut
             // 
-            btnCheckOut.Location = new Point(1079, 719);
+            btnCheckOut.BackColor = Color.Violet;
+            btnCheckOut.FlatStyle = FlatStyle.Flat;
+            btnCheckOut.Font = new Font("Courier New", 13.8F, FontStyle.Bold);
+            btnCheckOut.Location = new Point(1304, 671);
             btnCheckOut.Name = "btnCheckOut";
             btnCheckOut.RightToLeft = RightToLeft.No;
-            btnCheckOut.Size = new Size(208, 68);
+            btnCheckOut.Size = new Size(163, 116);
             btnCheckOut.TabIndex = 21;
             btnCheckOut.Text = "CHECK OUT";
-            btnCheckOut.UseVisualStyleBackColor = true;
+            btnCheckOut.UseVisualStyleBackColor = false;
             btnCheckOut.Click += btnCheckOut_Click;
             // 
             // dgvCart
@@ -313,6 +333,7 @@
             // cmbDiscount
             // 
             cmbDiscount.BackColor = SystemColors.Info;
+            cmbDiscount.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbDiscount.Font = new Font("Courier New", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
             cmbDiscount.FormattingEnabled = true;
             cmbDiscount.Location = new Point(103, 8);
@@ -325,16 +346,17 @@
             // 
             lblDiscount.BackColor = SystemColors.Info;
             lblDiscount.Font = new Font("Courier New", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblDiscount.Location = new Point(351, 8);
+            lblDiscount.Location = new Point(18, 72);
             lblDiscount.Name = "lblDiscount";
-            lblDiscount.Size = new Size(222, 41);
+            lblDiscount.ReadOnly = true;
+            lblDiscount.Size = new Size(542, 41);
             lblDiscount.TabIndex = 25;
             // 
             // txtCashGiven
             // 
             txtCashGiven.BackColor = SystemColors.Info;
             txtCashGiven.Font = new Font("Courier New", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            txtCashGiven.Location = new Point(21, 125);
+            txtCashGiven.Location = new Point(18, 171);
             txtCashGiven.Name = "txtCashGiven";
             txtCashGiven.Size = new Size(541, 41);
             txtCashGiven.TabIndex = 26;
@@ -343,19 +365,23 @@
             // 
             txtChange.BackColor = SystemColors.Info;
             txtChange.Font = new Font("Courier New", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            txtChange.Location = new Point(21, 230);
+            txtChange.Location = new Point(18, 263);
             txtChange.Name = "txtChange";
+            txtChange.ReadOnly = true;
             txtChange.Size = new Size(541, 41);
             txtChange.TabIndex = 27;
             // 
             // btnCalculateChange
             // 
-            btnCalculateChange.Location = new Point(1126, 495);
+            btnCalculateChange.BackColor = Color.MediumSeaGreen;
+            btnCalculateChange.FlatStyle = FlatStyle.Flat;
+            btnCalculateChange.Font = new Font("Courier New", 13.8F, FontStyle.Bold);
+            btnCalculateChange.Location = new Point(1304, 245);
             btnCalculateChange.Name = "btnCalculateChange";
-            btnCalculateChange.Size = new Size(163, 96);
+            btnCalculateChange.Size = new Size(163, 116);
             btnCalculateChange.TabIndex = 28;
             btnCalculateChange.Text = "CALCULATE";
-            btnCalculateChange.UseVisualStyleBackColor = true;
+            btnCalculateChange.UseVisualStyleBackColor = false;
             btnCalculateChange.Click += btnCalculateChange_Click;
             // 
             // btnquantityplus
@@ -387,120 +413,141 @@
             // 
             // button7click
             // 
-            button7click.Font = new Font("Courier New", 10.2F, FontStyle.Bold);
+            button7click.BackColor = Color.FromArgb(255, 192, 192);
+            button7click.FlatStyle = FlatStyle.Popup;
+            button7click.Font = new Font("Courier New", 18F, FontStyle.Bold);
             button7click.Location = new Point(648, 495);
             button7click.Name = "button7click";
             button7click.Size = new Size(96, 68);
             button7click.TabIndex = 31;
             button7click.Text = "7";
-            button7click.UseVisualStyleBackColor = true;
+            button7click.UseVisualStyleBackColor = false;
             button7click.Click += button7click_Click;
             // 
             // button8click
             // 
-            button8click.Font = new Font("Courier New", 10.2F, FontStyle.Bold);
+            button8click.BackColor = Color.FromArgb(255, 192, 192);
+            button8click.FlatStyle = FlatStyle.Popup;
+            button8click.Font = new Font("Courier New", 18F, FontStyle.Bold);
             button8click.Location = new Point(753, 495);
             button8click.Name = "button8click";
             button8click.Size = new Size(96, 68);
             button8click.TabIndex = 32;
             button8click.Text = "8";
-            button8click.UseVisualStyleBackColor = true;
+            button8click.UseVisualStyleBackColor = false;
             button8click.Click += button8click_Click;
             // 
             // button9click
             // 
-            button9click.Font = new Font("Courier New", 10.2F, FontStyle.Bold);
+            button9click.BackColor = Color.FromArgb(255, 192, 192);
+            button9click.FlatStyle = FlatStyle.Popup;
+            button9click.Font = new Font("Courier New", 18F, FontStyle.Bold);
             button9click.Location = new Point(855, 495);
             button9click.Name = "button9click";
             button9click.Size = new Size(96, 68);
             button9click.TabIndex = 33;
             button9click.Text = "9";
-            button9click.UseVisualStyleBackColor = true;
+            button9click.UseVisualStyleBackColor = false;
             button9click.Click += button9click_Click;
             // 
             // button4click
             // 
-            button4click.Font = new Font("Courier New", 10.2F, FontStyle.Bold);
+            button4click.BackColor = Color.FromArgb(255, 192, 192);
+            button4click.FlatStyle = FlatStyle.Popup;
+            button4click.Font = new Font("Courier New", 18F, FontStyle.Bold);
             button4click.Location = new Point(648, 569);
             button4click.Name = "button4click";
             button4click.Size = new Size(96, 68);
             button4click.TabIndex = 34;
             button4click.Text = "4";
-            button4click.UseVisualStyleBackColor = true;
+            button4click.UseVisualStyleBackColor = false;
             button4click.Click += button4click_Click;
             // 
             // button5click
             // 
-            button5click.Font = new Font("Courier New", 10.2F, FontStyle.Bold);
+            button5click.BackColor = Color.FromArgb(255, 192, 192);
+            button5click.FlatStyle = FlatStyle.Popup;
+            button5click.Font = new Font("Courier New", 18F, FontStyle.Bold);
             button5click.Location = new Point(753, 569);
             button5click.Name = "button5click";
             button5click.Size = new Size(96, 68);
             button5click.TabIndex = 35;
             button5click.Text = "5";
-            button5click.UseVisualStyleBackColor = true;
+            button5click.UseVisualStyleBackColor = false;
             button5click.Click += button5click_Click;
             // 
             // button6click
             // 
-            button6click.Font = new Font("Courier New", 10.2F, FontStyle.Bold);
+            button6click.BackColor = Color.FromArgb(255, 192, 192);
+            button6click.FlatStyle = FlatStyle.Popup;
+            button6click.Font = new Font("Courier New", 18F, FontStyle.Bold);
             button6click.Location = new Point(855, 564);
             button6click.Name = "button6click";
             button6click.Size = new Size(96, 68);
             button6click.TabIndex = 36;
             button6click.Text = "6";
-            button6click.UseVisualStyleBackColor = true;
+            button6click.UseVisualStyleBackColor = false;
             button6click.Click += button6click_Click;
             // 
             // button1click
             // 
-            button1click.Font = new Font("Courier New", 10.2F, FontStyle.Bold);
+            button1click.BackColor = Color.FromArgb(255, 192, 192);
+            button1click.FlatStyle = FlatStyle.Popup;
+            button1click.Font = new Font("Courier New", 18F, FontStyle.Bold);
             button1click.Location = new Point(648, 643);
             button1click.Name = "button1click";
             button1click.Size = new Size(96, 68);
             button1click.TabIndex = 37;
             button1click.Text = "1";
-            button1click.UseVisualStyleBackColor = true;
+            button1click.UseVisualStyleBackColor = false;
             button1click.Click += button1click_Click;
             // 
             // button2click
             // 
-            button2click.Font = new Font("Courier New", 10.2F, FontStyle.Bold);
+            button2click.BackColor = Color.FromArgb(255, 192, 192);
+            button2click.FlatStyle = FlatStyle.Popup;
+            button2click.Font = new Font("Courier New", 18F, FontStyle.Bold);
             button2click.Location = new Point(753, 643);
             button2click.Name = "button2click";
             button2click.Size = new Size(96, 68);
             button2click.TabIndex = 38;
             button2click.Text = "2";
-            button2click.UseVisualStyleBackColor = true;
+            button2click.UseVisualStyleBackColor = false;
             button2click.Click += button2click_Click;
             // 
             // button3click
             // 
-            button3click.Font = new Font("Courier New", 10.2F, FontStyle.Bold);
+            button3click.BackColor = Color.FromArgb(255, 192, 192);
+            button3click.FlatStyle = FlatStyle.Popup;
+            button3click.Font = new Font("Courier New", 18F, FontStyle.Bold);
             button3click.Location = new Point(855, 638);
             button3click.Name = "button3click";
             button3click.Size = new Size(96, 68);
             button3click.TabIndex = 39;
             button3click.Text = "3";
-            button3click.UseVisualStyleBackColor = true;
+            button3click.UseVisualStyleBackColor = false;
             button3click.Click += button3click_Click;
             // 
             // button0
             // 
-            button0.Font = new Font("Courier New", 10.2F, FontStyle.Bold);
+            button0.BackColor = Color.FromArgb(255, 192, 192);
+            button0.FlatStyle = FlatStyle.Popup;
+            button0.Font = new Font("Courier New", 18F, FontStyle.Bold);
             button0.Location = new Point(648, 717);
             button0.Name = "button0";
             button0.Size = new Size(96, 68);
             button0.TabIndex = 40;
             button0.Text = "0";
-            button0.UseVisualStyleBackColor = true;
+            button0.UseVisualStyleBackColor = false;
             button0.Click += button0_Click;
             // 
             // btnclearbarcode
             // 
-            btnclearbarcode.Font = new Font("Courier New", 10.2F, FontStyle.Bold);
+            btnclearbarcode.FlatStyle = FlatStyle.Flat;
+            btnclearbarcode.Font = new Font("Courier New", 13.8F, FontStyle.Bold);
             btnclearbarcode.Location = new Point(855, 719);
             btnclearbarcode.Name = "btnclearbarcode";
-            btnclearbarcode.Size = new Size(218, 68);
+            btnclearbarcode.Size = new Size(96, 68);
             btnclearbarcode.TabIndex = 41;
             btnclearbarcode.Text = "CLEAR";
             btnclearbarcode.UseVisualStyleBackColor = true;
@@ -511,7 +558,7 @@
             lblPricePreview.AutoSize = true;
             lblPricePreview.BackColor = Color.WhiteSmoke;
             lblPricePreview.Font = new Font("Courier New", 28.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblPricePreview.Location = new Point(105, 31);
+            lblPricePreview.Location = new Point(3, 31);
             lblPricePreview.Name = "lblPricePreview";
             lblPricePreview.Size = new Size(51, 53);
             lblPricePreview.TabIndex = 42;
@@ -519,13 +566,15 @@
             // 
             // buttondecimal
             // 
-            buttondecimal.Font = new Font("Courier New", 10.2F, FontStyle.Bold);
+            buttondecimal.BackColor = Color.FromArgb(255, 192, 192);
+            buttondecimal.FlatStyle = FlatStyle.Popup;
+            buttondecimal.Font = new Font("Courier New", 18F, FontStyle.Bold);
             buttondecimal.Location = new Point(753, 719);
             buttondecimal.Name = "buttondecimal";
             buttondecimal.Size = new Size(96, 68);
             buttondecimal.TabIndex = 43;
             buttondecimal.Text = ".";
-            buttondecimal.UseVisualStyleBackColor = true;
+            buttondecimal.UseVisualStyleBackColor = false;
             buttondecimal.Click += buttondecimal_Click;
             // 
             // panel2
@@ -641,7 +690,7 @@
             label12.BackColor = Color.White;
             label12.Font = new Font("Courier New", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label12.ForeColor = SystemColors.ActiveCaptionText;
-            label12.Location = new Point(21, 181);
+            label12.Location = new Point(18, 214);
             label12.Name = "label12";
             label12.Size = new Size(141, 34);
             label12.TabIndex = 28;
@@ -653,7 +702,7 @@
             label11.BackColor = Color.White;
             label11.Font = new Font("Courier New", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label11.ForeColor = SystemColors.ActiveCaptionText;
-            label11.Location = new Point(21, 77);
+            label11.Location = new Point(18, 123);
             label11.Name = "label11";
             label11.Size = new Size(213, 34);
             label11.TabIndex = 27;
@@ -665,7 +714,7 @@
             label6.BackColor = Color.White;
             label6.Font = new Font("Courier New", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label6.ForeColor = SystemColors.ActiveCaptionText;
-            label6.Location = new Point(18, 8);
+            label6.Location = new Point(8, 24);
             label6.Name = "label6";
             label6.Size = new Size(89, 17);
             label6.TabIndex = 7;
@@ -704,12 +753,23 @@
             panel8.Size = new Size(639, 123);
             panel8.TabIndex = 46;
             // 
+            // pbProductImage
+            // 
+            pbProductImage.BackgroundImageLayout = ImageLayout.Zoom;
+            pbProductImage.BorderStyle = BorderStyle.Fixed3D;
+            pbProductImage.Location = new Point(975, 495);
+            pbProductImage.Name = "pbProductImage";
+            pbProductImage.Size = new Size(312, 290);
+            pbProductImage.TabIndex = 47;
+            pbProductImage.TabStop = false;
+            // 
             // CashierInterface
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
             ClientSize = new Size(1724, 799);
+            Controls.Add(pbProductImage);
             Controls.Add(panel8);
             Controls.Add(pictureBox1);
             Controls.Add(label13);
@@ -757,6 +817,7 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             panel8.ResumeLayout(false);
             panel8.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pbProductImage).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -819,5 +880,6 @@
         private Label label13;
         private PictureBox pictureBox1;
         private Panel panel8;
+        private PictureBox pbProductImage;
     }
 }

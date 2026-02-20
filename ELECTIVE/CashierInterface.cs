@@ -118,6 +118,8 @@ namespace ELECTIVE
                         lblProductPrice.Text = product.Price.ToString("0.00");  // ✅ NO $ symbol!
                         lblAvailableQty.Text = product.Quantity.ToString();
 
+                        LoadProductImage(product.ImagePath);
+
                         // Check if already in cart
                         CartItem existingItem = cart.Find(item => item.ProductID == product.ProductID);
 
@@ -132,6 +134,7 @@ namespace ELECTIVE
                         lblProductName.Text = "";
                         lblProductPrice.Text = "";  // ✅ Clear, not "$"
                         lblAvailableQty.Text = "";
+                        pbProductImage.Image = null;
                     }
 
                     e.Handled = true;
@@ -146,7 +149,7 @@ namespace ELECTIVE
                 txtBarcode.Focus();
             }
         }
-        }
+
 
         private void btnAddToCart_Click(object sender, EventArgs e)
         {
@@ -479,6 +482,8 @@ namespace ELECTIVE
                     lblProductPrice.Text = product.Price.ToString("0.00");  // ✅ NO $ symbol!
                     lblAvailableQty.Text = product.Quantity.ToString();
 
+                    LoadProductImage(product.ImagePath);
+
                     // Check if already in cart
                     CartItem existingItem = cart.Find(item => item.ProductID == product.ProductID);
 
@@ -499,6 +504,7 @@ namespace ELECTIVE
                     lblProductPrice.Text = "";  // ✅ Clear, not "$"
                     lblAvailableQty.Text = "";
                     lblPricePreview.Text = "";  // ✅ Clear, not "$"
+                    pbProductImage.Image = null;
                 }
             }
             catch (Exception ex)
@@ -604,7 +610,7 @@ namespace ELECTIVE
 
         private void btnclearbarcode_Click(object sender, EventArgs e)
         {
-            // Use lastFocusedControl to remember which textbox was active
+            // ✅ ONLY allow backspace on EDITABLE input fields
             if (lastFocusedControl == txtBarcode)
             {
                 if (txtBarcode.Text.Length > 0)
@@ -619,21 +625,15 @@ namespace ELECTIVE
                     txtCashGiven.Text = txtCashGiven.Text.Substring(0, txtCashGiven.Text.Length - 1);
                 }
             }
-            else if (lastFocusedControl == txtChange)
-            {
-                if (txtChange.Text.Length > 0)
-                {
-                    txtChange.Text = txtChange.Text.Substring(0, txtChange.Text.Length - 1);
-                }
-            }
+            // ❌ REMOVED: txtChange (it's read-only, user shouldn't delete it!)
 
             // Put focus back on the textbox after deleting
             lastFocusedControl?.Focus();
         }
-        
 
-    
-        
+
+
+
         public void AddNumberToFocusedTextbox(string number)
         {
             if (lastFocusedControl == txtBarcode)
@@ -720,16 +720,49 @@ namespace ELECTIVE
             currentQuantity = 1;
             lblQuantityDisplay.Text = "1";
             txtBarcode.Focus();
+            pbProductImage.Image = null;
         }
 
-    }
-    public class CartItem
-    {
-        public int ProductID { get; set; }
-        public string ProductName { get; set; }
-        public int Quantity { get; set; }
-        public decimal UnitPrice { get; set; }
-        public decimal TotalPrice { get; set; }
+        private void LoadProductImage(string imagePath)
+        {
+            try
+            {
+                // Clear previous image
+                pbProductImage.Image = null;
+
+                // Check if image path exists and file exists
+                if (!string.IsNullOrEmpty(imagePath) && System.IO.File.Exists(imagePath))
+                {
+                    try
+                    {
+                        pbProductImage.Image = Image.FromFile(imagePath);
+                        pbProductImage.SizeMode = PictureBoxSizeMode.Zoom;
+                    }
+                    catch (Exception ex)
+                    {
+                        // Image file corrupted or can't be loaded
+                        MessageBox.Show("Could not load image: " + ex.Message);
+                        pbProductImage.Image = null;
+                    }
+                }
+                // If no image found, just leave it blank (no error)
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error loading image: " + ex.Message);
+            }
+        }
+
+
+        public class CartItem
+        {
+            public int ProductID { get; set; }
+            public string ProductName { get; set; }
+            public int Quantity { get; set; }
+            public decimal UnitPrice { get; set; }
+            public decimal TotalPrice { get; set; }
+        }
+
+
     }
 }
-

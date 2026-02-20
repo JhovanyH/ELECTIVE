@@ -42,6 +42,18 @@
             qrcodeimage = new PictureBox();
             barcodeimage = new PictureBox();
             panel3 = new Panel();
+            label15 = new Label();
+            label14 = new Label();
+            label13 = new Label();
+            label12 = new Label();
+            label11 = new Label();
+            label10 = new Label();
+            label9 = new Label();
+            label8 = new Label();
+            label7 = new Label();
+            label6 = new Label();
+            panel5 = new Panel();
+            panel4 = new Panel();
             lblMfgDate = new TextBox();
             lblExpDate = new TextBox();
             lblUnit = new TextBox();
@@ -201,7 +213,19 @@
             // 
             // panel3
             // 
-            panel3.BackColor = Color.WhiteSmoke;
+            panel3.BackColor = Color.White;
+            panel3.Controls.Add(label15);
+            panel3.Controls.Add(label14);
+            panel3.Controls.Add(label13);
+            panel3.Controls.Add(label12);
+            panel3.Controls.Add(label11);
+            panel3.Controls.Add(label10);
+            panel3.Controls.Add(label9);
+            panel3.Controls.Add(label8);
+            panel3.Controls.Add(label7);
+            panel3.Controls.Add(label6);
+            panel3.Controls.Add(panel5);
+            panel3.Controls.Add(panel4);
             panel3.Controls.Add(lblMfgDate);
             panel3.Controls.Add(lblExpDate);
             panel3.Controls.Add(lblUnit);
@@ -214,94 +238,230 @@
             panel3.Controls.Add(lblBarcode);
             panel3.Location = new Point(980, 12);
             panel3.Name = "panel3";
-            panel3.Size = new Size(371, 657);
+            panel3.Size = new Size(494, 657);
             panel3.TabIndex = 8;
+            // 
+            // label15
+            // 
+            label15.AutoSize = true;
+            label15.Font = new Font("Courier New", 7.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label15.Location = new Point(3, 589);
+            label15.Name = "label15";
+            label15.Size = new Size(159, 16);
+            label15.TabIndex = 35;
+            label15.Text = "Manufacturing Date:";
+            // 
+            // label14
+            // 
+            label14.AutoSize = true;
+            label14.Font = new Font("Courier New", 7.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label14.Location = new Point(3, 528);
+            label14.Name = "label14";
+            label14.Size = new Size(135, 16);
+            label14.TabIndex = 34;
+            label14.Text = "Expiration Date:";
+            // 
+            // label13
+            // 
+            label13.AutoSize = true;
+            label13.Font = new Font("Courier New", 7.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label13.Location = new Point(3, 467);
+            label13.Name = "label13";
+            label13.Size = new Size(39, 16);
+            label13.TabIndex = 33;
+            label13.Text = "Unit";
+            // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.Font = new Font("Courier New", 7.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label12.Location = new Point(3, 406);
+            label12.Name = "label12";
+            label12.Size = new Size(55, 16);
+            label12.TabIndex = 32;
+            label12.Text = "Stock:";
+            // 
+            // label11
+            // 
+            label11.AutoSize = true;
+            label11.Font = new Font("Courier New", 7.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label11.Location = new Point(3, 345);
+            label11.Name = "label11";
+            label11.Size = new Size(103, 16);
+            label11.TabIndex = 31;
+            label11.Text = "Description:";
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.Font = new Font("Courier New", 7.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label10.Location = new Point(3, 284);
+            label10.Name = "label10";
+            label10.Size = new Size(79, 16);
+            label10.TabIndex = 30;
+            label10.Text = "Supplier:";
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Font = new Font("Courier New", 7.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label9.Location = new Point(3, 223);
+            label9.Name = "label9";
+            label9.Size = new Size(55, 16);
+            label9.TabIndex = 29;
+            label9.Text = "Price:";
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Font = new Font("Courier New", 7.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label8.Location = new Point(3, 162);
+            label8.Name = "label8";
+            label8.Size = new Size(79, 16);
+            label8.TabIndex = 28;
+            label8.Text = "Category:";
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Font = new Font("Courier New", 7.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label7.Location = new Point(3, 101);
+            label7.Name = "label7";
+            label7.Size = new Size(71, 16);
+            label7.TabIndex = 27;
+            label7.Text = "Product:";
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Font = new Font("Courier New", 7.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label6.Location = new Point(3, 40);
+            label6.Name = "label6";
+            label6.Size = new Size(71, 16);
+            label6.TabIndex = 6;
+            label6.Text = "Barcode:";
+            // 
+            // panel5
+            // 
+            panel5.BackColor = Color.IndianRed;
+            panel5.Location = new Point(0, 643);
+            panel5.Name = "panel5";
+            panel5.Size = new Size(494, 14);
+            panel5.TabIndex = 26;
+            // 
+            // panel4
+            // 
+            panel4.BackColor = Color.IndianRed;
+            panel4.Location = new Point(0, 3);
+            panel4.Name = "panel4";
+            panel4.Size = new Size(494, 14);
+            panel4.TabIndex = 25;
             // 
             // lblMfgDate
             // 
-            lblMfgDate.Font = new Font("Courier New", 10.8F, FontStyle.Bold);
-            lblMfgDate.Location = new Point(16, 598);
+            lblMfgDate.BorderStyle = BorderStyle.None;
+            lblMfgDate.Font = new Font("Courier New", 10.2F, FontStyle.Bold | FontStyle.Underline);
+            lblMfgDate.Location = new Point(177, 577);
             lblMfgDate.Name = "lblMfgDate";
-            lblMfgDate.Size = new Size(334, 28);
+            lblMfgDate.Size = new Size(296, 20);
             lblMfgDate.TabIndex = 24;
+            lblMfgDate.TextAlign = HorizontalAlignment.Right;
             // 
             // lblExpDate
             // 
-            lblExpDate.Font = new Font("Courier New", 10.8F, FontStyle.Bold);
-            lblExpDate.Location = new Point(16, 532);
+            lblExpDate.BorderStyle = BorderStyle.None;
+            lblExpDate.Font = new Font("Courier New", 10.2F, FontStyle.Bold | FontStyle.Underline);
+            lblExpDate.Location = new Point(177, 516);
             lblExpDate.Name = "lblExpDate";
-            lblExpDate.Size = new Size(334, 28);
+            lblExpDate.Size = new Size(296, 20);
             lblExpDate.TabIndex = 23;
+            lblExpDate.TextAlign = HorizontalAlignment.Right;
             // 
             // lblUnit
             // 
-            lblUnit.Font = new Font("Courier New", 10.8F, FontStyle.Bold);
-            lblUnit.Location = new Point(30, 451);
+            lblUnit.BorderStyle = BorderStyle.None;
+            lblUnit.Font = new Font("Courier New", 10.2F, FontStyle.Bold | FontStyle.Underline);
+            lblUnit.Location = new Point(139, 455);
             lblUnit.Name = "lblUnit";
-            lblUnit.Size = new Size(318, 28);
+            lblUnit.Size = new Size(334, 20);
             lblUnit.TabIndex = 22;
+            lblUnit.TextAlign = HorizontalAlignment.Right;
             // 
             // lblStock
             // 
-            lblStock.Font = new Font("Courier New", 10.8F, FontStyle.Bold);
-            lblStock.Location = new Point(30, 393);
+            lblStock.BorderStyle = BorderStyle.None;
+            lblStock.Font = new Font("Courier New", 10.2F, FontStyle.Bold | FontStyle.Underline);
+            lblStock.Location = new Point(139, 394);
             lblStock.Name = "lblStock";
-            lblStock.Size = new Size(318, 28);
+            lblStock.Size = new Size(334, 20);
             lblStock.TabIndex = 21;
+            lblStock.TextAlign = HorizontalAlignment.Right;
             // 
             // txtDescription
             // 
-            txtDescription.Font = new Font("Courier New", 10.8F, FontStyle.Bold);
-            txtDescription.Location = new Point(14, 325);
+            txtDescription.BorderStyle = BorderStyle.None;
+            txtDescription.Font = new Font("Courier New", 10.2F, FontStyle.Bold | FontStyle.Underline);
+            txtDescription.Location = new Point(139, 333);
             txtDescription.Name = "txtDescription";
-            txtDescription.Size = new Size(354, 28);
+            txtDescription.Size = new Size(334, 20);
             txtDescription.TabIndex = 20;
+            txtDescription.TextAlign = HorizontalAlignment.Right;
             // 
             // lblSupplier
             // 
-            lblSupplier.Font = new Font("Courier New", 10.8F, FontStyle.Bold);
-            lblSupplier.Location = new Point(30, 257);
+            lblSupplier.BorderStyle = BorderStyle.None;
+            lblSupplier.Font = new Font("Courier New", 10.2F, FontStyle.Bold | FontStyle.Underline);
+            lblSupplier.Location = new Point(139, 272);
             lblSupplier.Name = "lblSupplier";
-            lblSupplier.Size = new Size(318, 28);
+            lblSupplier.Size = new Size(334, 20);
             lblSupplier.TabIndex = 19;
+            lblSupplier.TextAlign = HorizontalAlignment.Right;
             // 
             // lblPrice
             // 
-            lblPrice.Font = new Font("Courier New", 10.8F, FontStyle.Bold);
-            lblPrice.Location = new Point(30, 185);
+            lblPrice.BorderStyle = BorderStyle.None;
+            lblPrice.Font = new Font("Courier New", 10.2F, FontStyle.Bold | FontStyle.Underline);
+            lblPrice.Location = new Point(139, 211);
             lblPrice.Name = "lblPrice";
-            lblPrice.Size = new Size(318, 28);
+            lblPrice.Size = new Size(334, 20);
             lblPrice.TabIndex = 18;
+            lblPrice.TextAlign = HorizontalAlignment.Right;
             // 
             // lblCategory
             // 
-            lblCategory.Font = new Font("Courier New", 10.8F, FontStyle.Bold);
-            lblCategory.Location = new Point(30, 122);
+            lblCategory.BorderStyle = BorderStyle.None;
+            lblCategory.Font = new Font("Courier New", 10.2F, FontStyle.Bold | FontStyle.Underline);
+            lblCategory.Location = new Point(139, 150);
             lblCategory.Name = "lblCategory";
-            lblCategory.Size = new Size(320, 28);
+            lblCategory.Size = new Size(334, 20);
             lblCategory.TabIndex = 17;
+            lblCategory.TextAlign = HorizontalAlignment.Right;
             // 
             // lblName
             // 
-            lblName.Font = new Font("Courier New", 10.8F, FontStyle.Bold);
-            lblName.Location = new Point(30, 67);
+            lblName.BorderStyle = BorderStyle.None;
+            lblName.Font = new Font("Courier New", 10.2F, FontStyle.Bold | FontStyle.Underline);
+            lblName.Location = new Point(139, 89);
             lblName.Name = "lblName";
-            lblName.Size = new Size(318, 28);
+            lblName.Size = new Size(334, 20);
             lblName.TabIndex = 16;
+            lblName.TextAlign = HorizontalAlignment.Right;
             // 
             // lblBarcode
             // 
-            lblBarcode.Font = new Font("Courier New", 10.8F, FontStyle.Bold);
-            lblBarcode.Location = new Point(30, 18);
+            lblBarcode.BorderStyle = BorderStyle.None;
+            lblBarcode.Font = new Font("Courier New", 10.2F, FontStyle.Bold | FontStyle.Underline);
+            lblBarcode.Location = new Point(139, 28);
             lblBarcode.Name = "lblBarcode";
-            lblBarcode.Size = new Size(318, 28);
+            lblBarcode.Size = new Size(334, 20);
             lblBarcode.TabIndex = 6;
+            lblBarcode.TextAlign = HorizontalAlignment.Right;
             // 
             // DisplayForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1401, 700);
+            ClientSize = new Size(1486, 700);
             Controls.Add(panel3);
             Controls.Add(panel2);
             Controls.Add(panel1);
@@ -348,5 +508,17 @@
         private TextBox lblCategory;
         private TextBox lblName;
         private TextBox lblMfgDate;
+        private Label label10;
+        private Label label9;
+        private Label label8;
+        private Label label7;
+        private Label label6;
+        private Panel panel5;
+        private Panel panel4;
+        private Label label15;
+        private Label label14;
+        private Label label13;
+        private Label label12;
+        private Label label11;
     }
 }

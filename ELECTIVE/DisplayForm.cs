@@ -83,7 +83,7 @@ namespace ELECTIVE
                         lblPrice.Text = product.Price.ToString("0.00");
                         lblSupplier.Text = (string.IsNullOrEmpty(product.Supplier) ? "N/A" : product.Supplier);
                         lblUnit.Text =  product.Unit;
-                        lblStock.Text = "Stock: " + product.Quantity;
+                        lblStock.Text =  product.Quantity.ToString();
                         txtDescription.Text = product.Description;
                         lblExpDate.Text = (product.ExpirationDate.HasValue ? product.ExpirationDate.Value.ToShortDateString() : "N/A");
                         lblMfgDate.Text = (product.ManufacturingDate.HasValue ? product.ManufacturingDate.Value.ToShortDateString() : "N/A");
