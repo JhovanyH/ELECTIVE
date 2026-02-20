@@ -114,9 +114,9 @@ namespace ELECTIVE
                     if (product != null)
                     {
                         // Display product info
-                        lblProductName.Text = "Product: " + product.ProductName;
-                        lblProductPrice.Text = "Price: $" + product.Price.ToString("0.00");
-                        lblAvailableQty.Text = "Available: " + product.Quantity;
+                        lblProductName.Text = product.ProductName;
+                        lblProductPrice.Text = product.Price.ToString("0.00");  // ✅ NO $ symbol!
+                        lblAvailableQty.Text = product.Quantity.ToString();
 
                         // Check if already in cart
                         CartItem existingItem = cart.Find(item => item.ProductID == product.ProductID);
@@ -125,15 +125,13 @@ namespace ELECTIVE
                         {
                             lblProductName.Text += " (Already in cart)";
                         }
-
-
                     }
                     else
                     {
                         MessageBox.Show("Product not found! Check the barcode.", "Not Found");
-                        lblProductName.Text = "Product: Not Found";
-                        lblProductPrice.Text = "Price: $0.00";
-                        lblAvailableQty.Text = "Available: 0";
+                        lblProductName.Text = "";
+                        lblProductPrice.Text = "";  // ✅ Clear, not "$"
+                        lblAvailableQty.Text = "";
                     }
 
                     e.Handled = true;
@@ -147,6 +145,7 @@ namespace ELECTIVE
                 txtBarcode.Clear();
                 txtBarcode.Focus();
             }
+        }
         }
 
         private void btnAddToCart_Click(object sender, EventArgs e)
@@ -200,9 +199,9 @@ namespace ELECTIVE
 
                 // Clear only product info, NOT price preview
                 txtBarcode.Clear();
-                lblProductName.Text = "Product: ";
-                lblProductPrice.Text = "Price: $0.00";
-                lblAvailableQty.Text = "Available: 0";
+                lblProductName.Text = "";
+                lblProductPrice.Text = "";
+                lblAvailableQty.Text = "";
                 currentQuantity = 1;
                 lblQuantityDisplay.Text = "1";
                 txtBarcode.Focus();
@@ -258,10 +257,11 @@ namespace ELECTIVE
             decimal tax = subtotalAfterDiscount * TAX_RATE;
             decimal total = subtotalAfterDiscount + tax;
 
+            // ✅ FIX: Use consistent format with text labels
             lblSubtotal.Text = "Subtotal: $" + subtotal.ToString("0.00");
             lblDiscount.Text = "Discount (" + (discountPercent * 100) + "%): -$" + discountAmount.ToString("0.00");
             lblTax.Text = "Tax (5%): $" + tax.ToString("0.00");
-            lblTotal.Text = "TOTAL: $" + total.ToString("0.00");
+            lblTotal.Text = "TOTAL: $" + total.ToString("0.00");  // ✅ Has "TOTAL: $" prefix
 
             lblPricePreview.Text = "Cart Total: $" + total.ToString("0.00");
         }
@@ -315,10 +315,10 @@ namespace ELECTIVE
             {
                 cart.Clear();
                 RefreshCart();
-                lblProductName.Text = "Product: ";
-                lblProductPrice.Text = "Price: $0.00";
-                lblAvailableQty.Text = "Available: 0";
-                lblPricePreview.Text = "Total: $0.00";
+                lblProductName.Text = "";
+                lblProductPrice.Text = "";
+                lblAvailableQty.Text = "";
+                lblPricePreview.Text = "";
                 txtBarcode.Clear();
                 txtCashGiven.Clear();
                 txtChange.Clear();
@@ -475,9 +475,9 @@ namespace ELECTIVE
                 if (product != null)
                 {
                     // Display product info
-                    lblProductName.Text = "Product: " + product.ProductName;
-                    lblProductPrice.Text = "Price: $" + product.Price.ToString("0.00");
-                    lblAvailableQty.Text = "Available: " + product.Quantity;
+                    lblProductName.Text = product.ProductName;
+                    lblProductPrice.Text = product.Price.ToString("0.00");  // ✅ NO $ symbol!
+                    lblAvailableQty.Text = product.Quantity.ToString();
 
                     // Check if already in cart
                     CartItem existingItem = cart.Find(item => item.ProductID == product.ProductID);
@@ -495,10 +495,10 @@ namespace ELECTIVE
                 else
                 {
                     MessageBox.Show("Product not found! Check the barcode.", "Not Found");
-                    lblProductName.Text = "Product: Not Found";
-                    lblProductPrice.Text = "Price: $0.00";
-                    lblAvailableQty.Text = "Available: 0";
-                    lblPricePreview.Text = "Total: $0.00";
+                    lblProductName.Text = "";
+                    lblProductPrice.Text = "";  // ✅ Clear, not "$"
+                    lblAvailableQty.Text = "";
+                    lblPricePreview.Text = "";  // ✅ Clear, not "$"
                 }
             }
             catch (Exception ex)
@@ -524,8 +524,14 @@ namespace ELECTIVE
                 }
 
                 // Extract total amount from label
+                // lblTotal.Text = "TOTAL: $100.50"
                 string totalText = lblTotal.Text.Replace("TOTAL: $", "").Trim();
-                decimal total = decimal.Parse(totalText);
+
+                if (!decimal.TryParse(totalText, out decimal total))
+                {
+                    MessageBox.Show("Invalid total amount");
+                    return;
+                }
 
                 // Get cash given
                 if (string.IsNullOrEmpty(txtCashGiven.Text))
@@ -534,7 +540,11 @@ namespace ELECTIVE
                     return;
                 }
 
-                decimal cashGiven = decimal.Parse(txtCashGiven.Text);
+                if (!decimal.TryParse(txtCashGiven.Text, out decimal cashGiven))
+                {
+                    MessageBox.Show("Invalid cash amount");
+                    return;
+                }
 
                 if (cashGiven < total)
                 {
@@ -572,11 +582,12 @@ namespace ELECTIVE
         {
             try
             {
-                // If price is 0, get it from the product
+                // If price is 0, get it from the product label
                 if (price == 0)
                 {
-                    string priceText = lblProductPrice.Text.Replace("Price: $", "").Trim();
-                    if (decimal.TryParse(priceText, out decimal parsedPrice))
+                    // lblProductPrice now just shows the number like "50.00"
+                    // No need to remove "Price: $"
+                    if (decimal.TryParse(lblProductPrice.Text, out decimal parsedPrice))
                     {
                         price = parsedPrice;
                     }
@@ -698,10 +709,10 @@ namespace ELECTIVE
         {
             cart.Clear();
             RefreshCart();
-            lblProductName.Text = "Product: ";
-            lblProductPrice.Text = "Price: $0.00";
-            lblAvailableQty.Text = "Available: 0";
-            lblPricePreview.Text = "Cart Total: $0.00";
+            lblProductName.Text = "";
+            lblProductPrice.Text = "";
+            lblAvailableQty.Text = "";
+            lblPricePreview.Text = "";
             txtBarcode.Clear();
             txtCashGiven.Clear();
             txtChange.Clear();

@@ -39,7 +39,6 @@
             lblAvailableQty = new TextBox();
             label5 = new Label();
             lblSubtotal = new TextBox();
-            label6 = new Label();
             lblTax = new TextBox();
             label7 = new Label();
             lblTotal = new TextBox();
@@ -70,50 +69,78 @@
             btnclearbarcode = new Button();
             lblPricePreview = new Label();
             buttondecimal = new Button();
+            panel2 = new Panel();
+            panel3 = new Panel();
+            panel5 = new Panel();
+            label9 = new Label();
+            label10 = new Label();
+            panel4 = new Panel();
+            label8 = new Label();
+            panel6 = new Panel();
+            panel7 = new Panel();
+            label12 = new Label();
+            label11 = new Label();
+            label6 = new Label();
+            label13 = new Label();
+            pictureBox1 = new PictureBox();
+            panel8 = new Panel();
+            panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvCart).BeginInit();
+            panel2.SuspendLayout();
+            panel3.SuspendLayout();
+            panel5.SuspendLayout();
+            panel4.SuspendLayout();
+            panel6.SuspendLayout();
+            panel7.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            panel8.SuspendLayout();
             SuspendLayout();
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Font = new Font("Courier New", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.Location = new Point(109, 44);
+            label1.Font = new Font("Courier New", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label1.Location = new Point(19, 22);
             label1.Name = "label1";
-            label1.Size = new Size(80, 17);
+            label1.Size = new Size(124, 27);
             label1.TabIndex = 0;
             label1.Text = "BARCODE:";
             // 
             // txtBarcode
             // 
             txtBarcode.BackColor = SystemColors.Info;
-            txtBarcode.Font = new Font("Courier New", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            txtBarcode.Location = new Point(195, 37);
+            txtBarcode.Font = new Font("Courier New", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            txtBarcode.Location = new Point(149, 15);
             txtBarcode.Name = "txtBarcode";
-            txtBarcode.Size = new Size(180, 24);
+            txtBarcode.Size = new Size(355, 41);
             txtBarcode.TabIndex = 1;
             txtBarcode.KeyDown += txtBarcode_KeyDown;
             // 
             // panel1
             // 
-            panel1.Location = new Point(1148, 382);
+            panel1.BackColor = Color.FromArgb(255, 192, 192);
+            panel1.Controls.Add(txtBarcode);
+            panel1.Controls.Add(label1);
+            panel1.Location = new Point(12, 23);
             panel1.Name = "panel1";
-            panel1.Size = new Size(250, 125);
+            panel1.Size = new Size(518, 71);
             panel1.TabIndex = 2;
             // 
             // lblProductPrice
             // 
-            lblProductPrice.BackColor = SystemColors.Info;
-            lblProductPrice.Font = new Font("Courier New", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblProductPrice.Location = new Point(195, 151);
+            lblProductPrice.BackColor = SystemColors.ControlLightLight;
+            lblProductPrice.BorderStyle = BorderStyle.None;
+            lblProductPrice.Font = new Font("Courier New", 10.8F, FontStyle.Bold | FontStyle.Underline, GraphicsUnit.Point, 0);
+            lblProductPrice.Location = new Point(397, 10);
             lblProductPrice.Name = "lblProductPrice";
-            lblProductPrice.Size = new Size(174, 24);
+            lblProductPrice.Size = new Size(203, 21);
             lblProductPrice.TabIndex = 3;
             // 
             // label2
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Courier New", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label2.Location = new Point(109, 105);
+            label2.Location = new Point(23, 10);
             label2.Name = "label2";
             label2.Size = new Size(53, 17);
             label2.TabIndex = 4;
@@ -121,18 +148,19 @@
             // 
             // lblProductName
             // 
-            lblProductName.BackColor = SystemColors.Info;
-            lblProductName.Font = new Font("Courier New", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblProductName.Location = new Point(195, 102);
+            lblProductName.BackColor = Color.White;
+            lblProductName.BorderStyle = BorderStyle.None;
+            lblProductName.Font = new Font("Courier New", 10.8F, FontStyle.Bold | FontStyle.Underline, GraphicsUnit.Point, 0);
+            lblProductName.Location = new Point(19, 10);
             lblProductName.Name = "lblProductName";
-            lblProductName.Size = new Size(192, 24);
+            lblProductName.Size = new Size(284, 21);
             lblProductName.TabIndex = 5;
             // 
             // label3
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Courier New", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label3.Location = new Point(109, 158);
+            label3.Location = new Point(397, 12);
             label3.Name = "label3";
             label3.Size = new Size(62, 17);
             label3.TabIndex = 6;
@@ -142,7 +170,7 @@
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Courier New", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label4.Location = new Point(10, 205);
+            label4.Location = new Point(19, 60);
             label4.Name = "label4";
             label4.Size = new Size(179, 17);
             label4.TabIndex = 7;
@@ -150,56 +178,48 @@
             // 
             // lblAvailableQty
             // 
-            lblAvailableQty.BackColor = SystemColors.Info;
-            lblAvailableQty.Font = new Font("Courier New", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblAvailableQty.Location = new Point(195, 205);
+            lblAvailableQty.BackColor = SystemColors.ControlLightLight;
+            lblAvailableQty.BorderStyle = BorderStyle.None;
+            lblAvailableQty.Font = new Font("Courier New", 10.8F, FontStyle.Bold | FontStyle.Underline, GraphicsUnit.Point, 0);
+            lblAvailableQty.Location = new Point(208, 53);
             lblAvailableQty.Name = "lblAvailableQty";
-            lblAvailableQty.Size = new Size(165, 24);
+            lblAvailableQty.Size = new Size(90, 21);
             lblAvailableQty.TabIndex = 8;
             // 
             // label5
             // 
             label5.AutoSize = true;
             label5.Font = new Font("Courier New", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label5.Location = new Point(82, 256);
+            label5.Location = new Point(50, 551);
             label5.Name = "label5";
-            label5.Size = new Size(89, 17);
+            label5.Size = new Size(0, 17);
             label5.TabIndex = 9;
-            label5.Text = "SUBTOTAL:";
             // 
             // lblSubtotal
             // 
-            lblSubtotal.BackColor = SystemColors.Info;
-            lblSubtotal.Font = new Font("Courier New", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblSubtotal.Location = new Point(195, 249);
+            lblSubtotal.BackColor = SystemColors.ControlLightLight;
+            lblSubtotal.BorderStyle = BorderStyle.None;
+            lblSubtotal.Font = new Font("Courier New", 9F, FontStyle.Bold | FontStyle.Underline, GraphicsUnit.Point, 0);
+            lblSubtotal.Location = new Point(18, 199);
             lblSubtotal.Name = "lblSubtotal";
-            lblSubtotal.Size = new Size(149, 24);
+            lblSubtotal.Size = new Size(247, 17);
             lblSubtotal.TabIndex = 10;
-            // 
-            // label6
-            // 
-            label6.AutoSize = true;
-            label6.Font = new Font("Courier New", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label6.Location = new Point(118, 297);
-            label6.Name = "label6";
-            label6.Size = new Size(44, 17);
-            label6.TabIndex = 11;
-            label6.Text = "TAX:";
             // 
             // lblTax
             // 
-            lblTax.BackColor = SystemColors.Info;
-            lblTax.Font = new Font("Courier New", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblTax.Location = new Point(192, 290);
+            lblTax.BackColor = SystemColors.ControlLightLight;
+            lblTax.BorderStyle = BorderStyle.None;
+            lblTax.Font = new Font("Courier New", 9F, FontStyle.Bold | FontStyle.Underline, GraphicsUnit.Point, 0);
+            lblTax.Location = new Point(397, 199);
             lblTax.Name = "lblTax";
-            lblTax.Size = new Size(183, 24);
+            lblTax.Size = new Size(183, 17);
             lblTax.TabIndex = 12;
             // 
             // label7
             // 
             label7.AutoSize = true;
             label7.Font = new Font("Courier New", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label7.Location = new Point(109, 346);
+            label7.Location = new Point(19, 246);
             label7.Name = "label7";
             label7.Size = new Size(62, 17);
             label7.TabIndex = 13;
@@ -207,28 +227,29 @@
             // 
             // lblTotal
             // 
-            lblTotal.BackColor = SystemColors.Info;
-            lblTotal.Font = new Font("Courier New", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblTotal.Location = new Point(195, 339);
+            lblTotal.BackColor = SystemColors.ControlLightLight;
+            lblTotal.BorderStyle = BorderStyle.None;
+            lblTotal.Font = new Font("Courier New", 9F, FontStyle.Bold | FontStyle.Underline, GraphicsUnit.Point, 0);
+            lblTotal.Location = new Point(87, 239);
             lblTotal.Name = "lblTotal";
-            lblTotal.Size = new Size(149, 24);
+            lblTotal.Size = new Size(149, 17);
             lblTotal.TabIndex = 14;
             // 
             // lblQuantityDisplay
             // 
             lblQuantityDisplay.AutoSize = true;
-            lblQuantityDisplay.Font = new Font("Courier New", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblQuantityDisplay.Location = new Point(1124, 44);
+            lblQuantityDisplay.Font = new Font("Courier New", 19.8000011F, FontStyle.Bold | FontStyle.Underline, GraphicsUnit.Point, 0);
+            lblQuantityDisplay.Location = new Point(173, 17);
             lblQuantityDisplay.Name = "lblQuantityDisplay";
-            lblQuantityDisplay.Size = new Size(89, 17);
+            lblQuantityDisplay.Size = new Size(37, 37);
             lblQuantityDisplay.TabIndex = 16;
-            lblQuantityDisplay.Text = "QUANTITY:";
+            lblQuantityDisplay.Text = "1";
             // 
             // btnAddToCart
             // 
-            btnAddToCart.Location = new Point(552, 41);
+            btnAddToCart.Location = new Point(957, 495);
             btnAddToCart.Name = "btnAddToCart";
-            btnAddToCart.Size = new Size(136, 53);
+            btnAddToCart.Size = new Size(163, 96);
             btnAddToCart.TabIndex = 17;
             btnAddToCart.Text = "ADD TO CART";
             btnAddToCart.UseVisualStyleBackColor = true;
@@ -236,10 +257,10 @@
             // 
             // btnRemoveItem
             // 
-            btnRemoveItem.Location = new Point(552, 105);
+            btnRemoveItem.Location = new Point(957, 607);
             btnRemoveItem.Name = "btnRemoveItem";
             btnRemoveItem.RightToLeft = RightToLeft.No;
-            btnRemoveItem.Size = new Size(136, 53);
+            btnRemoveItem.Size = new Size(163, 96);
             btnRemoveItem.TabIndex = 18;
             btnRemoveItem.Text = "REMOVE ITEM";
             btnRemoveItem.UseVisualStyleBackColor = true;
@@ -247,10 +268,10 @@
             // 
             // btnClearCart
             // 
-            btnClearCart.Location = new Point(552, 169);
+            btnClearCart.Location = new Point(1126, 607);
             btnClearCart.Name = "btnClearCart";
             btnClearCart.RightToLeft = RightToLeft.No;
-            btnClearCart.Size = new Size(136, 53);
+            btnClearCart.Size = new Size(161, 96);
             btnClearCart.TabIndex = 20;
             btnClearCart.Text = "CLEAR CART";
             btnClearCart.UseVisualStyleBackColor = true;
@@ -258,10 +279,10 @@
             // 
             // btnCheckOut
             // 
-            btnCheckOut.Location = new Point(552, 249);
+            btnCheckOut.Location = new Point(1079, 719);
             btnCheckOut.Name = "btnCheckOut";
             btnCheckOut.RightToLeft = RightToLeft.No;
-            btnCheckOut.Size = new Size(136, 53);
+            btnCheckOut.Size = new Size(208, 68);
             btnCheckOut.TabIndex = 21;
             btnCheckOut.Text = "CHECK OUT";
             btnCheckOut.UseVisualStyleBackColor = true;
@@ -270,64 +291,68 @@
             // dgvCart
             // 
             dgvCart.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvCart.Location = new Point(733, 114);
+            dgvCart.Location = new Point(648, 105);
             dgvCart.Name = "dgvCart";
             dgvCart.RowHeadersWidth = 51;
-            dgvCart.Size = new Size(641, 249);
+            dgvCart.Size = new Size(639, 249);
             dgvCart.TabIndex = 22;
             // 
             // searchbtton
             // 
-            searchbtton.Location = new Point(746, 27);
+            searchbtton.BackColor = SystemColors.InactiveCaptionText;
+            searchbtton.BackgroundImage = Properties.Resources.magnifyingGlass1;
+            searchbtton.BackgroundImageLayout = ImageLayout.Zoom;
+            searchbtton.ForeColor = SystemColors.ControlText;
+            searchbtton.Location = new Point(536, 20);
             searchbtton.Name = "searchbtton";
-            searchbtton.Size = new Size(136, 53);
+            searchbtton.Size = new Size(95, 76);
             searchbtton.TabIndex = 23;
-            searchbtton.Text = "SEARCH";
-            searchbtton.UseVisualStyleBackColor = true;
+            searchbtton.UseVisualStyleBackColor = false;
             searchbtton.Click += searchbtton_Click;
             // 
             // cmbDiscount
             // 
             cmbDiscount.BackColor = SystemColors.Info;
+            cmbDiscount.Font = new Font("Courier New", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
             cmbDiscount.FormattingEnabled = true;
-            cmbDiscount.Location = new Point(209, 513);
+            cmbDiscount.Location = new Point(103, 8);
             cmbDiscount.Name = "cmbDiscount";
-            cmbDiscount.Size = new Size(151, 28);
+            cmbDiscount.Size = new Size(235, 42);
             cmbDiscount.TabIndex = 24;
             cmbDiscount.SelectedIndexChanged += cmbDiscount_SelectedIndexChanged;
             // 
             // lblDiscount
             // 
             lblDiscount.BackColor = SystemColors.Info;
-            lblDiscount.Font = new Font("Courier New", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblDiscount.Location = new Point(161, 571);
+            lblDiscount.Font = new Font("Courier New", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblDiscount.Location = new Point(351, 8);
             lblDiscount.Name = "lblDiscount";
-            lblDiscount.Size = new Size(183, 24);
+            lblDiscount.Size = new Size(222, 41);
             lblDiscount.TabIndex = 25;
             // 
             // txtCashGiven
             // 
             txtCashGiven.BackColor = SystemColors.Info;
-            txtCashGiven.Font = new Font("Courier New", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            txtCashGiven.Location = new Point(73, 643);
+            txtCashGiven.Font = new Font("Courier New", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            txtCashGiven.Location = new Point(21, 125);
             txtCashGiven.Name = "txtCashGiven";
-            txtCashGiven.Size = new Size(183, 24);
+            txtCashGiven.Size = new Size(541, 41);
             txtCashGiven.TabIndex = 26;
             // 
             // txtChange
             // 
             txtChange.BackColor = SystemColors.Info;
-            txtChange.Font = new Font("Courier New", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            txtChange.Location = new Point(522, 689);
+            txtChange.Font = new Font("Courier New", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            txtChange.Location = new Point(21, 230);
             txtChange.Name = "txtChange";
-            txtChange.Size = new Size(183, 24);
+            txtChange.Size = new Size(541, 41);
             txtChange.TabIndex = 27;
             // 
             // btnCalculateChange
             // 
-            btnCalculateChange.Location = new Point(415, 488);
+            btnCalculateChange.Location = new Point(1126, 495);
             btnCalculateChange.Name = "btnCalculateChange";
-            btnCalculateChange.Size = new Size(136, 53);
+            btnCalculateChange.Size = new Size(163, 96);
             btnCalculateChange.TabIndex = 28;
             btnCalculateChange.Text = "CALCULATE";
             btnCalculateChange.UseVisualStyleBackColor = true;
@@ -335,35 +360,37 @@
             // 
             // btnquantityplus
             // 
+            btnquantityplus.BackColor = Color.FromArgb(255, 255, 192);
             btnquantityplus.FlatStyle = FlatStyle.Flat;
-            btnquantityplus.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnquantityplus.Location = new Point(1070, 20);
+            btnquantityplus.Font = new Font("Segoe UI", 19.8000011F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnquantityplus.Location = new Point(114, 7);
             btnquantityplus.Name = "btnquantityplus";
-            btnquantityplus.Size = new Size(48, 47);
+            btnquantityplus.Size = new Size(53, 54);
             btnquantityplus.TabIndex = 29;
-            btnquantityplus.Text = "+";
-            btnquantityplus.TextAlign = ContentAlignment.MiddleRight;
-            btnquantityplus.UseVisualStyleBackColor = true;
+            btnquantityplus.Text = "+\r\n+\r\n";
+            btnquantityplus.TextAlign = ContentAlignment.TopCenter;
+            btnquantityplus.UseVisualStyleBackColor = false;
             btnquantityplus.Click += btnquantityplus_Click;
             // 
             // button1
             // 
+            button1.BackColor = Color.FromArgb(255, 255, 192);
             button1.FlatStyle = FlatStyle.Flat;
             button1.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            button1.Location = new Point(1220, 23);
+            button1.Location = new Point(212, 7);
             button1.Name = "button1";
-            button1.Size = new Size(48, 47);
+            button1.Size = new Size(53, 54);
             button1.TabIndex = 30;
             button1.Text = "-";
-            button1.UseVisualStyleBackColor = true;
+            button1.UseVisualStyleBackColor = false;
             button1.Click += button1_Click;
             // 
             // button7click
             // 
             button7click.Font = new Font("Courier New", 10.2F, FontStyle.Bold);
-            button7click.Location = new Point(746, 454);
+            button7click.Location = new Point(648, 495);
             button7click.Name = "button7click";
-            button7click.Size = new Size(64, 53);
+            button7click.Size = new Size(96, 68);
             button7click.TabIndex = 31;
             button7click.Text = "7";
             button7click.UseVisualStyleBackColor = true;
@@ -372,9 +399,9 @@
             // button8click
             // 
             button8click.Font = new Font("Courier New", 10.2F, FontStyle.Bold);
-            button8click.Location = new Point(816, 454);
+            button8click.Location = new Point(753, 495);
             button8click.Name = "button8click";
-            button8click.Size = new Size(64, 53);
+            button8click.Size = new Size(96, 68);
             button8click.TabIndex = 32;
             button8click.Text = "8";
             button8click.UseVisualStyleBackColor = true;
@@ -383,9 +410,9 @@
             // button9click
             // 
             button9click.Font = new Font("Courier New", 10.2F, FontStyle.Bold);
-            button9click.Location = new Point(886, 454);
+            button9click.Location = new Point(855, 495);
             button9click.Name = "button9click";
-            button9click.Size = new Size(64, 53);
+            button9click.Size = new Size(96, 68);
             button9click.TabIndex = 33;
             button9click.Text = "9";
             button9click.UseVisualStyleBackColor = true;
@@ -394,9 +421,9 @@
             // button4click
             // 
             button4click.Font = new Font("Courier New", 10.2F, FontStyle.Bold);
-            button4click.Location = new Point(746, 513);
+            button4click.Location = new Point(648, 569);
             button4click.Name = "button4click";
-            button4click.Size = new Size(64, 53);
+            button4click.Size = new Size(96, 68);
             button4click.TabIndex = 34;
             button4click.Text = "4";
             button4click.UseVisualStyleBackColor = true;
@@ -405,9 +432,9 @@
             // button5click
             // 
             button5click.Font = new Font("Courier New", 10.2F, FontStyle.Bold);
-            button5click.Location = new Point(816, 513);
+            button5click.Location = new Point(753, 569);
             button5click.Name = "button5click";
-            button5click.Size = new Size(64, 53);
+            button5click.Size = new Size(96, 68);
             button5click.TabIndex = 35;
             button5click.Text = "5";
             button5click.UseVisualStyleBackColor = true;
@@ -416,9 +443,9 @@
             // button6click
             // 
             button6click.Font = new Font("Courier New", 10.2F, FontStyle.Bold);
-            button6click.Location = new Point(886, 513);
+            button6click.Location = new Point(855, 564);
             button6click.Name = "button6click";
-            button6click.Size = new Size(64, 53);
+            button6click.Size = new Size(96, 68);
             button6click.TabIndex = 36;
             button6click.Text = "6";
             button6click.UseVisualStyleBackColor = true;
@@ -427,9 +454,9 @@
             // button1click
             // 
             button1click.Font = new Font("Courier New", 10.2F, FontStyle.Bold);
-            button1click.Location = new Point(746, 572);
+            button1click.Location = new Point(648, 643);
             button1click.Name = "button1click";
-            button1click.Size = new Size(64, 53);
+            button1click.Size = new Size(96, 68);
             button1click.TabIndex = 37;
             button1click.Text = "1";
             button1click.UseVisualStyleBackColor = true;
@@ -438,9 +465,9 @@
             // button2click
             // 
             button2click.Font = new Font("Courier New", 10.2F, FontStyle.Bold);
-            button2click.Location = new Point(816, 571);
+            button2click.Location = new Point(753, 643);
             button2click.Name = "button2click";
-            button2click.Size = new Size(64, 53);
+            button2click.Size = new Size(96, 68);
             button2click.TabIndex = 38;
             button2click.Text = "2";
             button2click.UseVisualStyleBackColor = true;
@@ -449,9 +476,9 @@
             // button3click
             // 
             button3click.Font = new Font("Courier New", 10.2F, FontStyle.Bold);
-            button3click.Location = new Point(886, 572);
+            button3click.Location = new Point(855, 638);
             button3click.Name = "button3click";
-            button3click.Size = new Size(64, 53);
+            button3click.Size = new Size(96, 68);
             button3click.TabIndex = 39;
             button3click.Text = "3";
             button3click.UseVisualStyleBackColor = true;
@@ -460,9 +487,9 @@
             // button0
             // 
             button0.Font = new Font("Courier New", 10.2F, FontStyle.Bold);
-            button0.Location = new Point(746, 631);
+            button0.Location = new Point(648, 717);
             button0.Name = "button0";
-            button0.Size = new Size(64, 53);
+            button0.Size = new Size(96, 68);
             button0.TabIndex = 40;
             button0.Text = "0";
             button0.UseVisualStyleBackColor = true;
@@ -471,9 +498,9 @@
             // btnclearbarcode
             // 
             btnclearbarcode.Font = new Font("Courier New", 10.2F, FontStyle.Bold);
-            btnclearbarcode.Location = new Point(984, 631);
+            btnclearbarcode.Location = new Point(855, 719);
             btnclearbarcode.Name = "btnclearbarcode";
-            btnclearbarcode.Size = new Size(134, 53);
+            btnclearbarcode.Size = new Size(218, 68);
             btnclearbarcode.TabIndex = 41;
             btnclearbarcode.Text = "CLEAR";
             btnclearbarcode.UseVisualStyleBackColor = true;
@@ -482,31 +509,214 @@
             // lblPricePreview
             // 
             lblPricePreview.AutoSize = true;
-            lblPricePreview.Font = new Font("Courier New", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblPricePreview.Location = new Point(668, 391);
+            lblPricePreview.BackColor = Color.WhiteSmoke;
+            lblPricePreview.Font = new Font("Courier New", 28.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblPricePreview.Location = new Point(105, 31);
             lblPricePreview.Name = "lblPricePreview";
-            lblPricePreview.Size = new Size(17, 17);
+            lblPricePreview.Size = new Size(51, 53);
             lblPricePreview.TabIndex = 42;
             lblPricePreview.Text = "0";
             // 
             // buttondecimal
             // 
             buttondecimal.Font = new Font("Courier New", 10.2F, FontStyle.Bold);
-            buttondecimal.Location = new Point(818, 631);
+            buttondecimal.Location = new Point(753, 719);
             buttondecimal.Name = "buttondecimal";
-            buttondecimal.Size = new Size(64, 53);
+            buttondecimal.Size = new Size(96, 68);
             buttondecimal.TabIndex = 43;
             buttondecimal.Text = ".";
             buttondecimal.UseVisualStyleBackColor = true;
             buttondecimal.Click += buttondecimal_Click;
             // 
+            // panel2
+            // 
+            panel2.BackColor = Color.FromArgb(255, 192, 192);
+            panel2.Controls.Add(label2);
+            panel2.Controls.Add(label3);
+            panel2.Location = new Point(12, 105);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(620, 32);
+            panel2.TabIndex = 3;
+            // 
+            // panel3
+            // 
+            panel3.BackColor = Color.White;
+            panel3.Controls.Add(panel5);
+            panel3.Controls.Add(label4);
+            panel3.Controls.Add(lblAvailableQty);
+            panel3.Controls.Add(panel4);
+            panel3.Controls.Add(lblProductName);
+            panel3.Controls.Add(lblProductPrice);
+            panel3.Controls.Add(lblSubtotal);
+            panel3.Controls.Add(lblTax);
+            panel3.Controls.Add(label7);
+            panel3.Controls.Add(lblTotal);
+            panel3.Location = new Point(12, 136);
+            panel3.Name = "panel3";
+            panel3.Size = new Size(619, 296);
+            panel3.TabIndex = 5;
+            // 
+            // panel5
+            // 
+            panel5.BackColor = Color.Red;
+            panel5.Controls.Add(label9);
+            panel5.Controls.Add(label10);
+            panel5.Location = new Point(1, 158);
+            panel5.Name = "panel5";
+            panel5.Size = new Size(619, 32);
+            panel5.TabIndex = 7;
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.BackColor = Color.White;
+            label9.Font = new Font("Courier New", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label9.ForeColor = SystemColors.ActiveCaptionText;
+            label9.Location = new Point(18, 8);
+            label9.Name = "label9";
+            label9.Size = new Size(89, 17);
+            label9.TabIndex = 4;
+            label9.Text = "SUBTOTAL:";
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.BackColor = Color.WhiteSmoke;
+            label10.Font = new Font("Courier New", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label10.Location = new Point(396, 8);
+            label10.Name = "label10";
+            label10.Size = new Size(44, 17);
+            label10.TabIndex = 6;
+            label10.Text = "TAX:";
+            // 
+            // panel4
+            // 
+            panel4.BackColor = Color.FromArgb(255, 192, 192);
+            panel4.Controls.Add(label8);
+            panel4.Controls.Add(btnquantityplus);
+            panel4.Controls.Add(lblQuantityDisplay);
+            panel4.Controls.Add(button1);
+            panel4.Location = new Point(0, 91);
+            panel4.Name = "panel4";
+            panel4.Size = new Size(619, 68);
+            panel4.TabIndex = 7;
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Font = new Font("Courier New", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label8.Location = new Point(19, 24);
+            label8.Name = "label8";
+            label8.Size = new Size(89, 17);
+            label8.TabIndex = 9;
+            label8.Text = "QUANTITY:";
+            // 
+            // panel6
+            // 
+            panel6.BackColor = SystemColors.AppWorkspace;
+            panel6.Controls.Add(panel7);
+            panel6.Location = new Point(12, 438);
+            panel6.Name = "panel6";
+            panel6.Size = new Size(618, 347);
+            panel6.TabIndex = 44;
+            // 
+            // panel7
+            // 
+            panel7.BackColor = SystemColors.ControlLightLight;
+            panel7.Controls.Add(label12);
+            panel7.Controls.Add(label11);
+            panel7.Controls.Add(cmbDiscount);
+            panel7.Controls.Add(label6);
+            panel7.Controls.Add(lblDiscount);
+            panel7.Controls.Add(txtCashGiven);
+            panel7.Controls.Add(txtChange);
+            panel7.Location = new Point(20, 17);
+            panel7.Name = "panel7";
+            panel7.Size = new Size(582, 312);
+            panel7.TabIndex = 45;
+            // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.BackColor = Color.White;
+            label12.Font = new Font("Courier New", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label12.ForeColor = SystemColors.ActiveCaptionText;
+            label12.Location = new Point(21, 181);
+            label12.Name = "label12";
+            label12.Size = new Size(141, 34);
+            label12.TabIndex = 28;
+            label12.Text = "CHANGE:";
+            // 
+            // label11
+            // 
+            label11.AutoSize = true;
+            label11.BackColor = Color.White;
+            label11.Font = new Font("Courier New", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label11.ForeColor = SystemColors.ActiveCaptionText;
+            label11.Location = new Point(21, 77);
+            label11.Name = "label11";
+            label11.Size = new Size(213, 34);
+            label11.TabIndex = 27;
+            label11.Text = "CASH GIVEN:";
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.BackColor = Color.White;
+            label6.Font = new Font("Courier New", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label6.ForeColor = SystemColors.ActiveCaptionText;
+            label6.Location = new Point(18, 8);
+            label6.Name = "label6";
+            label6.Size = new Size(89, 17);
+            label6.TabIndex = 7;
+            label6.Text = "DISCOUNT:";
+            // 
+            // label13
+            // 
+            label13.AutoSize = true;
+            label13.BackColor = Color.White;
+            label13.Font = new Font("Courier New", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label13.ForeColor = SystemColors.ActiveCaptionText;
+            label13.Location = new Point(744, 45);
+            label13.Name = "label13";
+            label13.Size = new Size(105, 34);
+            label13.TabIndex = 29;
+            label13.Text = "CART:";
+            // 
+            // pictureBox1
+            // 
+            pictureBox1.BackgroundImageLayout = ImageLayout.Zoom;
+            pictureBox1.Image = Properties.Resources.shopping_cart;
+            pictureBox1.Location = new Point(648, 23);
+            pictureBox1.Margin = new Padding(0);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(83, 73);
+            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox1.TabIndex = 45;
+            pictureBox1.TabStop = false;
+            // 
+            // panel8
+            // 
+            panel8.BackColor = Color.Black;
+            panel8.Controls.Add(lblPricePreview);
+            panel8.Location = new Point(648, 351);
+            panel8.Name = "panel8";
+            panel8.Size = new Size(639, 123);
+            panel8.TabIndex = 46;
+            // 
             // CashierInterface
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1398, 799);
+            BackColor = Color.White;
+            ClientSize = new Size(1724, 799);
+            Controls.Add(panel8);
+            Controls.Add(pictureBox1);
+            Controls.Add(label13);
+            Controls.Add(panel6);
+            Controls.Add(panel3);
+            Controls.Add(panel2);
             Controls.Add(buttondecimal);
-            Controls.Add(lblPricePreview);
             Controls.Add(btnclearbarcode);
             Controls.Add(button0);
             Controls.Add(button3click);
@@ -518,39 +728,35 @@
             Controls.Add(button9click);
             Controls.Add(button8click);
             Controls.Add(button7click);
-            Controls.Add(button1);
-            Controls.Add(btnquantityplus);
             Controls.Add(btnCalculateChange);
-            Controls.Add(txtChange);
-            Controls.Add(txtCashGiven);
-            Controls.Add(lblDiscount);
-            Controls.Add(cmbDiscount);
             Controls.Add(searchbtton);
             Controls.Add(dgvCart);
             Controls.Add(btnCheckOut);
             Controls.Add(btnClearCart);
             Controls.Add(btnRemoveItem);
             Controls.Add(btnAddToCart);
-            Controls.Add(lblQuantityDisplay);
-            Controls.Add(lblTotal);
-            Controls.Add(label7);
-            Controls.Add(lblTax);
-            Controls.Add(label6);
-            Controls.Add(lblSubtotal);
             Controls.Add(label5);
-            Controls.Add(lblAvailableQty);
-            Controls.Add(label4);
-            Controls.Add(label3);
-            Controls.Add(lblProductName);
-            Controls.Add(label2);
-            Controls.Add(lblProductPrice);
             Controls.Add(panel1);
-            Controls.Add(txtBarcode);
-            Controls.Add(label1);
             Name = "CashierInterface";
             Text = "CashierInterface";
             Load += CashierInterface_Load;
+            panel1.ResumeLayout(false);
+            panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgvCart).EndInit();
+            panel2.ResumeLayout(false);
+            panel2.PerformLayout();
+            panel3.ResumeLayout(false);
+            panel3.PerformLayout();
+            panel5.ResumeLayout(false);
+            panel5.PerformLayout();
+            panel4.ResumeLayout(false);
+            panel4.PerformLayout();
+            panel6.ResumeLayout(false);
+            panel7.ResumeLayout(false);
+            panel7.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            panel8.ResumeLayout(false);
+            panel8.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -568,7 +774,6 @@
         private TextBox lblAvailableQty;
         private Label label5;
         private TextBox lblSubtotal;
-        private Label label6;
         private TextBox lblTax;
         private Label label7;
         private TextBox lblTotal;
@@ -599,5 +804,20 @@
         private Button btnclearbarcode;
         private Label lblPricePreview;
         private Button buttondecimal;
+        private Panel panel2;
+        private Panel panel3;
+        private Panel panel4;
+        private Label label8;
+        private Panel panel5;
+        private Label label9;
+        private Label label10;
+        private Panel panel6;
+        private Label label6;
+        private Panel panel7;
+        private Label label12;
+        private Label label11;
+        private Label label13;
+        private PictureBox pictureBox1;
+        private Panel panel8;
     }
 }
