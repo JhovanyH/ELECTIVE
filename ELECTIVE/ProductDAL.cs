@@ -330,25 +330,23 @@ namespace ELECTIVE
             {
                 using (SqlConnection conn = DatabaseConnection.GetConnection())
                 {
-                    // SQL UPDATE statement
-                    // SET specifies which columns to update
-                    // WHERE specifies which row to update (by ProductID)
+                    // ✅ FIXED: Added BarcodeImagePath and QRCodeImagePath to UPDATE
                     string query = @"UPDATE Products SET 
-                                    Barcode = @Barcode,
-                                    ProductName = @ProductName,
-                                    Category = @Category,
-                                    Quantity = @Quantity,
-                                    Supplier = @Supplier,
-                                    Price = @Price,
-                                    ExpirationDate = @ExpirationDate,
-                                    ManufacturingDate = @ManufacturingDate,
-                                    Unit = @Unit,
-                                    Description = @Description,
-                                    ImagePath = @ImagePath, 
-                                    BarcodeImagePath = @BarcodeImagePath,      // ← ADD THIS
-                                    QRCodeImagePath = @QRCodeImagePath,  
-                                    UpdatedDate = GETDATE()
-                                    WHERE ProductID = @ProductID";
+                            Barcode = @Barcode,
+                            ProductName = @ProductName,
+                            Category = @Category,
+                            Quantity = @Quantity,
+                            Supplier = @Supplier,
+                            Price = @Price,
+                            ExpirationDate = @ExpirationDate,
+                            ManufacturingDate = @ManufacturingDate,
+                            Unit = @Unit,
+                            Description = @Description,
+                            ImagePath = @ImagePath,
+                            BarcodeImagePath = @BarcodeImagePath,
+                            QRCodeImagePath = @QRCodeImagePath,
+                            UpdatedDate = GETDATE()
+                            WHERE ProductID = @ProductID";
 
                     using (SqlCommand cmd = new SqlCommand(query, conn))
                     {
@@ -365,8 +363,8 @@ namespace ELECTIVE
                         cmd.Parameters.AddWithValue("@Unit", product.Unit ?? "");
                         cmd.Parameters.AddWithValue("@Description", product.Description ?? "");
                         cmd.Parameters.AddWithValue("@ImagePath", product.ImagePath ?? "");
-                        cmd.Parameters.AddWithValue("@BarcodeImagePath", product.BarcodeImagePath ?? "");
-                        cmd.Parameters.AddWithValue("@QRCodeImagePath", product.QRCodeImagePath ?? "");
+                        cmd.Parameters.AddWithValue("@BarcodeImagePath", product.BarcodeImagePath ?? "");  // ✅ ADD THIS
+                        cmd.Parameters.AddWithValue("@QRCodeImagePath", product.QRCodeImagePath ?? "");    // ✅ ADD THIS
 
                         // Execute the UPDATE command
                         int rowsAffected = cmd.ExecuteNonQuery();

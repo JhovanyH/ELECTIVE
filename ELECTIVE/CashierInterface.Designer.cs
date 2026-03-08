@@ -116,6 +116,7 @@
             txtBarcode.Name = "txtBarcode";
             txtBarcode.Size = new Size(355, 41);
             txtBarcode.TabIndex = 1;
+            txtBarcode.TextChanged += txtBarcode_TextChanged;
             txtBarcode.KeyDown += txtBarcode_KeyDown;
             // 
             // panel1

@@ -118,12 +118,13 @@ namespace ELECTIVE
             dtpMfgDate.Value = DateTime.Now;
             dtpExpDate.Value = DateTime.Now;
             pbProductImage.Image = null;
-            barcode_imagebox = null;
-            qrImagebox = null;
+            barcode_imagebox.Image = null;
+            qrImagebox.Image = null;
             selectedBarcodeImagePath = null;
             selectedQRCodeImagePath = null;
             selectedImagePath = null;
             txtBarcode.Focus();
+            
         }
 
         private void save_button_Click(object sender, EventArgs e)
@@ -218,6 +219,8 @@ namespace ELECTIVE
                 currentProduct.ManufacturingDate = dtpMfgDate.Value;
                 currentProduct.ExpirationDate = dtpExpDate.Value;
                 currentProduct.ImagePath = selectedImagePath;
+                currentProduct.BarcodeImagePath = selectedBarcodeImagePath;
+                currentProduct.QRCodeImagePath = selectedQRCodeImagePath;
 
                 if (ProductDAL.UpdateProduct(currentProduct))
                 {
@@ -399,7 +402,7 @@ namespace ELECTIVE
                         {
                             try
                             {
-                                qrImagebox.Image = Image.FromFile(currentProduct.BarcodeImagePath);
+                                qrImagebox.Image = Image.FromFile(currentProduct.QRCodeImagePath);
                                 qrImagebox.SizeMode = PictureBoxSizeMode.Zoom;
                                 selectedQRCodeImagePath = currentProduct.QRCodeImagePath;
                             }
@@ -443,7 +446,7 @@ namespace ELECTIVE
                     // Display image in PictureBox
                     Image image = Image.FromFile(selectedBarcodeImagePath);
                     barcode_imagebox.Image = image;
-                    qrImagebox.SizeMode = PictureBoxSizeMode.StretchImage;
+                    barcode_imagebox.SizeMode = PictureBoxSizeMode.StretchImage;
 
                     MessageBox.Show("Barcode image selected successfully!", "Success");
                 }
@@ -468,7 +471,7 @@ namespace ELECTIVE
 
                     // Display image in PictureBox
                     Image image = Image.FromFile(selectedQRCodeImagePath);
-                    barcode_imagebox.Image = image;
+                    qrImagebox.Image = image;
                     qrImagebox.SizeMode = PictureBoxSizeMode.Zoom;
 
                     MessageBox.Show("QR code image selected successfully!", "Success");

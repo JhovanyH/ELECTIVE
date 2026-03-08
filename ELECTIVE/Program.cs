@@ -14,6 +14,6 @@ namespace ELECTIVE
             //Application.Run(new CashierInterface());
             //Application.Run(new AdminForm());
             Application.Run(new MainMenu());
-        }
+        }5
     }
 }

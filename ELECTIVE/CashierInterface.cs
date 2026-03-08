@@ -19,6 +19,13 @@ namespace ELECTIVE
         private int currentQuantity = 1; // Track current quantity
         private Control lastFocusedControl = null;
 
+
+
+
+
+
+
+
         public CashierInterface()
         {
             InitializeComponent();
@@ -42,6 +49,10 @@ namespace ELECTIVE
             txtBarcode.Enter += (s, e) => lastFocusedControl = txtBarcode;
             txtCashGiven.Enter += (s, e) => lastFocusedControl = txtCashGiven;
             txtChange.Enter += (s, e) => lastFocusedControl = txtChange;
+
+
+
+
         }
 
         private void InitializeCartGrid()
@@ -91,13 +102,13 @@ namespace ELECTIVE
             }
         }
 
-
-
         private void txtBarcode_KeyDown(object sender, KeyEventArgs e)
         {
-            // When user presses Enter after scanning/typing barcode
             if (e.KeyCode == Keys.Return)
             {
+                e.Handled = true;
+                e.SuppressKeyPress = true; // ← THIS stops Enter from triggering any other button
+
                 try
                 {
                     string barcode = txtBarcode.Text.Trim();
@@ -108,48 +119,40 @@ namespace ELECTIVE
                         return;
                     }
 
-                    // Look up product by barcode
                     Product product = ProductDAL.GetProductByBarcode(barcode);
 
                     if (product != null)
                     {
-                        // Display product info
                         lblProductName.Text = product.ProductName;
-                        lblProductPrice.Text = product.Price.ToString("0.00");  // ✅ NO $ symbol!
+                        lblProductPrice.Text = product.Price.ToString("0.00");
                         lblAvailableQty.Text = product.Quantity.ToString();
 
                         LoadProductImage(product.ImagePath);
 
-                        // Check if already in cart
                         CartItem existingItem = cart.Find(item => item.ProductID == product.ProductID);
-
                         if (existingItem != null)
-                        {
                             lblProductName.Text += " (Already in cart)";
-                        }
+
+                        currentQuantity = 1;
+                        lblQuantityDisplay.Text = "1";
+                        UpdatePricePreview(product.Price);
                     }
                     else
                     {
                         MessageBox.Show("Product not found! Check the barcode.", "Not Found");
                         lblProductName.Text = "";
-                        lblProductPrice.Text = "";  // ✅ Clear, not "$"
+                        lblProductPrice.Text = "";
                         lblAvailableQty.Text = "";
                         pbProductImage.Image = null;
                     }
-
-                    e.Handled = true;
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show("Error: " + ex.Message);
                 }
-
-                // Clear barcode field and refocus for next scan
-                txtBarcode.Clear();
-                txtBarcode.Focus();
             }
-        }
 
+        }
 
         private void btnAddToCart_Click(object sender, EventArgs e)
         {
@@ -216,6 +219,7 @@ namespace ELECTIVE
                 MessageBox.Show("Error: " + ex.Message);
             }
         }
+
         private void RefreshCart()
         {
             try
@@ -243,6 +247,7 @@ namespace ELECTIVE
                 MessageBox.Show("Error refreshing cart: " + ex.Message);
             }
         }
+
         private void CalculateTotals()
         {
             decimal subtotal = 0;
@@ -260,11 +265,10 @@ namespace ELECTIVE
             decimal tax = subtotalAfterDiscount * TAX_RATE;
             decimal total = subtotalAfterDiscount + tax;
 
-            // ✅ FIX: Use consistent format with text labels
             lblSubtotal.Text = "Subtotal: $" + subtotal.ToString("0.00");
             lblDiscount.Text = "Discount (" + (discountPercent * 100) + "%): -$" + discountAmount.ToString("0.00");
             lblTax.Text = "Tax (5%): $" + tax.ToString("0.00");
-            lblTotal.Text = "TOTAL: $" + total.ToString("0.00");  // ✅ Has "TOTAL: $" prefix
+            lblTotal.Text = "TOTAL: $" + total.ToString("0.00");
 
             lblPricePreview.Text = "Cart Total: $" + total.ToString("0.00");
         }
@@ -297,6 +301,13 @@ namespace ELECTIVE
                     {
                         cart.RemoveAt(rowIndex);
                         RefreshCart();
+
+                        // Clear product display info after removing
+                        lblProductName.Text = "";
+                        lblProductPrice.Text = "";
+                        lblAvailableQty.Text = "";
+                        pbProductImage.Image = null;
+
                         MessageBox.Show("Item removed from cart");
                     }
                 }
@@ -363,21 +374,16 @@ namespace ELECTIVE
 
                 if (result == DialogResult.Yes)
                 {
-                    // ==========================================
-                    // SAVE TO DATABASE
-                    // ==========================================
-
-                    // Step 1: Create a new Sale record
+                    // Step 1: Create a new Sale record in the database
                     int saleID = ProductDAL.AddSale(total, "Completed");
 
                     if (saleID > 0)
                     {
                         bool allItemsSaved = true;
 
-                        // Step 2: For each item in cart, save SaleDetail and update stock
+                        // Step 2: Save each cart item and reduce its stock
                         foreach (CartItem item in cart)
                         {
-                            // Save the item to SaleDetails table
                             bool detailSaved = ProductDAL.AddSaleDetail(
                                 saleID,
                                 item.ProductID,
@@ -386,7 +392,6 @@ namespace ELECTIVE
                                 item.TotalPrice
                             );
 
-                            // Decrease the product stock
                             bool stockUpdated = ProductDAL.DecreaseProductStock(
                                 item.ProductID,
                                 item.Quantity
@@ -400,12 +405,8 @@ namespace ELECTIVE
 
                         if (allItemsSaved)
                         {
-                            // Show receipt
                             ShowReceipt();
-
-                            // Clear everything
                             ClearEverything();
-
                             MessageBox.Show("Sale completed successfully! Transaction saved.", "Success");
                         }
                         else
@@ -424,6 +425,7 @@ namespace ELECTIVE
                 MessageBox.Show("Error: " + ex.Message);
             }
         }
+
         private void ShowReceipt()
         {
             string totalText = lblTotal.Text.Replace("TOTAL: $", "").Trim();
@@ -461,7 +463,6 @@ namespace ELECTIVE
 
         private void searchbtton_Click(object sender, EventArgs e)
         {
-
             try
             {
                 string barcode = txtBarcode.Text.Trim();
@@ -479,7 +480,7 @@ namespace ELECTIVE
                 {
                     // Display product info
                     lblProductName.Text = product.ProductName;
-                    lblProductPrice.Text = product.Price.ToString("0.00");  // ✅ NO $ symbol!
+                    lblProductPrice.Text = product.Price.ToString("0.00");
                     lblAvailableQty.Text = product.Quantity.ToString();
 
                     LoadProductImage(product.ImagePath);
@@ -501,9 +502,9 @@ namespace ELECTIVE
                 {
                     MessageBox.Show("Product not found! Check the barcode.", "Not Found");
                     lblProductName.Text = "";
-                    lblProductPrice.Text = "";  // ✅ Clear, not "$"
+                    lblProductPrice.Text = "";
                     lblAvailableQty.Text = "";
-                    lblPricePreview.Text = "";  // ✅ Clear, not "$"
+                    lblPricePreview.Text = "";
                     pbProductImage.Image = null;
                 }
             }
@@ -515,7 +516,6 @@ namespace ELECTIVE
 
         private void cmbDiscount_SelectedIndexChanged(object sender, EventArgs e)
         {
-
             CalculateTotals();
         }
 
@@ -529,8 +529,6 @@ namespace ELECTIVE
                     return;
                 }
 
-                // Extract total amount from label
-                // lblTotal.Text = "TOTAL: $100.50"
                 string totalText = lblTotal.Text.Replace("TOTAL: $", "").Trim();
 
                 if (!decimal.TryParse(totalText, out decimal total))
@@ -539,7 +537,6 @@ namespace ELECTIVE
                     return;
                 }
 
-                // Get cash given
                 if (string.IsNullOrEmpty(txtCashGiven.Text))
                 {
                     MessageBox.Show("Please enter cash given");
@@ -558,7 +555,6 @@ namespace ELECTIVE
                     return;
                 }
 
-                // Calculate change
                 decimal change = cashGiven - total;
                 txtChange.Text = change.ToString("0.00");
             }
@@ -584,15 +580,14 @@ namespace ELECTIVE
                 UpdatePricePreview();
             }
         }
+
         private void UpdatePricePreview(decimal price = 0)
         {
             try
             {
-                // If price is 0, get it from the product label
+                // If price is not provided, read it from the product price label
                 if (price == 0)
                 {
-                    // lblProductPrice now just shows the number like "50.00"
-                    // No need to remove "Price: $"
                     if (decimal.TryParse(lblProductPrice.Text, out decimal parsedPrice))
                     {
                         price = parsedPrice;
@@ -610,7 +605,7 @@ namespace ELECTIVE
 
         private void btnclearbarcode_Click(object sender, EventArgs e)
         {
-            // ✅ ONLY allow backspace on EDITABLE input fields
+            // Only allow backspace on editable input fields
             if (lastFocusedControl == txtBarcode)
             {
                 if (txtBarcode.Text.Length > 0)
@@ -625,15 +620,12 @@ namespace ELECTIVE
                     txtCashGiven.Text = txtCashGiven.Text.Substring(0, txtCashGiven.Text.Length - 1);
                 }
             }
-            // ❌ REMOVED: txtChange (it's read-only, user shouldn't delete it!)
 
-            // Put focus back on the textbox after deleting
+            // Return focus to the last active textbox
             lastFocusedControl?.Focus();
         }
 
-
-
-
+        // Appends a number or character to whichever textbox is currently active
         public void AddNumberToFocusedTextbox(string number)
         {
             if (lastFocusedControl == txtBarcode)
@@ -643,68 +635,24 @@ namespace ELECTIVE
             else if (lastFocusedControl == txtChange)
                 txtChange.Text += number;
             else
-                txtBarcode.Text += number; // Default
+                txtBarcode.Text += number; // Default to barcode if nothing is focused
 
-            // Keep focus on the textbox, not the button
             lastFocusedControl?.Focus();
         }
 
-        private void button0_Click(object sender, EventArgs e)
-        {
-            AddNumberToFocusedTextbox("0");
-        }
+        private void button0_Click(object sender, EventArgs e) { AddNumberToFocusedTextbox("0"); }
+        private void button1click_Click(object sender, EventArgs e) { AddNumberToFocusedTextbox("1"); }
+        private void button2click_Click(object sender, EventArgs e) { AddNumberToFocusedTextbox("2"); }
+        private void button3click_Click(object sender, EventArgs e) { AddNumberToFocusedTextbox("3"); }
+        private void button4click_Click(object sender, EventArgs e) { AddNumberToFocusedTextbox("4"); }
+        private void button5click_Click(object sender, EventArgs e) { AddNumberToFocusedTextbox("5"); }
+        private void button6click_Click(object sender, EventArgs e) { AddNumberToFocusedTextbox("6"); }
+        private void button7click_Click(object sender, EventArgs e) { AddNumberToFocusedTextbox("7"); }
+        private void button8click_Click(object sender, EventArgs e) { AddNumberToFocusedTextbox("8"); }
+        private void button9click_Click(object sender, EventArgs e) { AddNumberToFocusedTextbox("9"); }
+        private void buttondecimal_Click(object sender, EventArgs e) { AddNumberToFocusedTextbox("."); }
 
-        private void button1click_Click(object sender, EventArgs e)
-        {
-            AddNumberToFocusedTextbox("1");
-        }
-
-        private void button2click_Click(object sender, EventArgs e)
-        {
-            AddNumberToFocusedTextbox("2");
-        }
-
-        private void button3click_Click(object sender, EventArgs e)
-        {
-            AddNumberToFocusedTextbox("3");
-        }
-
-        private void button4click_Click(object sender, EventArgs e)
-        {
-            AddNumberToFocusedTextbox("4");
-        }
-
-        private void button5click_Click(object sender, EventArgs e)
-        {
-            AddNumberToFocusedTextbox("5");
-        }
-
-        private void button6click_Click(object sender, EventArgs e)
-        {
-            AddNumberToFocusedTextbox("6");
-        }
-
-        private void button7click_Click(object sender, EventArgs e)
-        {
-            AddNumberToFocusedTextbox("7");
-        }
-
-        private void button8click_Click(object sender, EventArgs e)
-        {
-            AddNumberToFocusedTextbox("8");
-        }
-
-        private void button9click_Click(object sender, EventArgs e)
-        {
-            AddNumberToFocusedTextbox("9");
-        }
-
-        private void buttondecimal_Click(object sender, EventArgs e)
-        {
-            AddNumberToFocusedTextbox(".");
-        }
-
-        // Helper method to clear everything
+        // Resets the entire form back to its initial empty state
         private void ClearEverything()
         {
             cart.Clear();
@@ -723,14 +671,13 @@ namespace ELECTIVE
             pbProductImage.Image = null;
         }
 
+        // Loads and displays the product image from the given file path
         private void LoadProductImage(string imagePath)
         {
             try
             {
-                // Clear previous image
                 pbProductImage.Image = null;
 
-                // Check if image path exists and file exists
                 if (!string.IsNullOrEmpty(imagePath) && System.IO.File.Exists(imagePath))
                 {
                     try
@@ -740,12 +687,10 @@ namespace ELECTIVE
                     }
                     catch (Exception ex)
                     {
-                        // Image file corrupted or can't be loaded
                         MessageBox.Show("Could not load image: " + ex.Message);
                         pbProductImage.Image = null;
                     }
                 }
-                // If no image found, just leave it blank (no error)
             }
             catch (Exception ex)
             {
@@ -753,7 +698,7 @@ namespace ELECTIVE
             }
         }
 
-
+        // Represents a single product entry in the shopping cart
         public class CartItem
         {
             public int ProductID { get; set; }
@@ -763,6 +708,12 @@ namespace ELECTIVE
             public decimal TotalPrice { get; set; }
         }
 
+        private void txtBarcode_TextChanged(object sender, EventArgs e)
+        {
+           
+        }
 
+        
+        
     }
 }
